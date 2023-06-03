@@ -1,17 +1,29 @@
 package com.nhnacademy.minidooraytaskapi.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
-
+@Entity
+@Table(name = "user_project")
 public class UserProject {
 
+    @EmbeddedId
+    private Pk pk;
 
+    @Embeddable
+    public class Pk implements Serializable {
+        @JoinColumn(name="user_uuid")
+        @ManyToOne
+        private User user;
+
+        @JoinColumn(name="project_id")
+        @ManyToOne
+        private Project project;
+    }
 }

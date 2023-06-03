@@ -1,9 +1,6 @@
 package com.nhnacademy.minidooraytaskapi.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,5 +19,13 @@ public class Comment {
 
         @Column(name="comment_creationdate")
         private String commentCreationDate;
+
+        @JoinColumn(name="user_uuid")
+        @ManyToOne
+        private User user;
+
+        @JoinColumn(name="task_id")
+        @ManyToOne
+        private Task task;
 
 }

@@ -1,9 +1,6 @@
 package com.nhnacademy.minidooraytaskapi.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,4 +16,7 @@ public class Tag {
     @Column(name="tag_name")
     private String tagName;
 
+    @JoinColumn(name="project_id")
+    @ManyToOne
+    private Project project;
 }

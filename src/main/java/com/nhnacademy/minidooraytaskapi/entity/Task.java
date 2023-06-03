@@ -1,10 +1,7 @@
 package com.nhnacademy.minidooraytaskapi.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,4 +26,16 @@ public class Task {
 
     @Column(name="task_enddate")
     private LocalDateTime taskEndDate;
+
+    @ManyToOne
+    @JoinColumn(name="milestone_id")
+    private Milestone milestone;
+
+    @ManyToOne
+    @JoinColumn(name="user_uuid")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name="project_id")
+    private Project project;
 }

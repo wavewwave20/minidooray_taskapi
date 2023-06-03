@@ -1,9 +1,6 @@
 package com.nhnacademy.minidooraytaskapi.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,4 +26,8 @@ public class Project {
 
     @Column(name="project_status")
     private ProjectStatusEnum projectStatus;
+
+    @JoinColumn(name="user_uuid")
+    @ManyToOne
+    private User user;
 }
