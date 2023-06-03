@@ -1,8 +1,10 @@
 package com.nhnacademy.minidooraytaskapi.entity;
 
-import jakarta.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -10,6 +12,7 @@ import lombok.Setter;
 @Table(name = "tag")
 public class Tag {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="tag_id")
     private Long tagId;
 

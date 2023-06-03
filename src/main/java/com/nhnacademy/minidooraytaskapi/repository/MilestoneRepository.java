@@ -1,4 +1,7 @@
 package com.nhnacademy.minidooraytaskapi.repository;
 
-public interface MilestoneRepository {
+import com.nhnacademy.minidooraytaskapi.entity.Milestone;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MilestoneRepository extends JpaRepository<Milestone, Long> {
 }

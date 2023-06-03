@@ -1,8 +1,10 @@
 package com.nhnacademy.minidooraytaskapi.entity;
 
-import jakarta.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -15,6 +17,7 @@ public class Project {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="project_id")
     private Long projectId;
 

@@ -1,10 +1,10 @@
 package com.nhnacademy.minidooraytaskapi.entity;
 
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Setter
@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "task")
 public class Task {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="task_id")
     private Long taskId;
     @Column(name="task_name")

@@ -1,4 +1,7 @@
 package com.nhnacademy.minidooraytaskapi.repository;
 
-public interface UserProjectRepository {
+import com.nhnacademy.minidooraytaskapi.entity.UserProject;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserProjectRepository extends JpaRepository<UserProject, UserProject.Pk> {
 }

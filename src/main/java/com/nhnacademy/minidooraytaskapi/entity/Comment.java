@@ -1,8 +1,10 @@
 package com.nhnacademy.minidooraytaskapi.entity;
 
-import jakarta.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -11,6 +13,7 @@ import lombok.Setter;
 public class Comment {
 
         @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name="comment_id")
         private Long commentId;
 
