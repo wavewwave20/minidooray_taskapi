@@ -1,10 +1,11 @@
 package com.nhnacademy.minidooraytaskapi.controller;
 
+import com.nhnacademy.minidooraytaskapi.dto.UserGetDto;
+import com.nhnacademy.minidooraytaskapi.dto.UserRegisterDto;
 import com.nhnacademy.minidooraytaskapi.entity.User;
 import com.nhnacademy.minidooraytaskapi.service.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -17,15 +18,26 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/api/users")
-    public User create() {
-        User user = new User();
-        //#TODO:user UUID GateWay에서 받아온걸로 대체-UUID 포함한 Dto로 변경해야 함
-        user.setUserUUID(UUID.randomUUID().toString());
-        user.setUserId("test");
-        user.setUserNickname("test");
 
-        userService.create(user);
-        return user;
+    @GetMapping("/taskapi/users/{id}")
+    public UserGetDto getUserByUUId(@PathVariable String UUID) {
+        return userService.getUserByUUId(UUID);
     }
+
+
+    @PostMapping("/taskapi/signup")
+    public User create(@RequestBody UserRegisterDto userRegisterDto) {
+        return userService.registerUser(userRegisterDto);
+    }
+
+    @DeleteMapping("/api/users/{id}")
+    public void deleteByUUId(@PathVariable String UUID) {
+        userService.deleteByUUId(UUID);
+    }
+
+    @PutMapping("/api/users/{id}")
+    public void updateByUUId(@PathVariable String UUID, @RequestBody UserRegisterDto userRegisterDto) {
+        userService.updateByUUId(UUID, userRegisterDto);
+    }
+
 }

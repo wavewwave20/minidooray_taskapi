@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class UserRegisterDto {
+public class UserGetDto {
     private String userUUID;
     private String userId;
     private String userNickName;

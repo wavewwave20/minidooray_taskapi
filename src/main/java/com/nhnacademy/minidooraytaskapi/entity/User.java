@@ -21,6 +21,9 @@ public class User {
     @Column(name="user_nickname")
     private String userNickname;
 
+    @Column(name="user_email")
+    private String userEmail;
+
 
     public User(String userId, String userNickname) {
         this.userId = userId;
