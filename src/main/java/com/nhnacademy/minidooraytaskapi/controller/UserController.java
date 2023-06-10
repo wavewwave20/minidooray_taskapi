@@ -20,7 +20,7 @@ public class UserController {
     @GetMapping("/api/users")
     public User create() {
         User user = new User();
-
+        //#TODO:user UUID GateWay에서 받아온걸로 대체-UUID 포함한 Dto로 변경해야 함
         user.setUserUUID(UUID.randomUUID().toString());
         user.setUserId("test");
         user.setUserNickname("test");
