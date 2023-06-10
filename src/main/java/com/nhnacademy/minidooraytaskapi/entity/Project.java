@@ -29,7 +29,7 @@ public class Project {
 
     @Column(name="project_status")
     private ProjectStatusEnum projectStatus;
-
+    //#TODO: project creation date 추가해야 할듯합니다??
     @JoinColumn(name="user_uuid")
     @ManyToOne
     private User user;
