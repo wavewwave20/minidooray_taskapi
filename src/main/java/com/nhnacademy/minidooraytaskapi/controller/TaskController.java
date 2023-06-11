@@ -12,6 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/taskapi/tasks")
 public class TaskController {
 
     private final TaskService taskService;
@@ -96,13 +97,6 @@ public class TaskController {
     public void deleteCommentById(Long commentId) {
         taskService.deleteCommentById(commentId);
     }
-
-
-
-
-
-
-
 
 
 }

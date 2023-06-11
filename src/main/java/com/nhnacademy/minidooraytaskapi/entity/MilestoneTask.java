@@ -1,32 +1,29 @@
 package com.nhnacademy.minidooraytaskapi.entity;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-
 import java.io.Serializable;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "user_project")
-public class UserProject {
-
+@Table(name = "milestone_task")
+public class MilestoneTask {
     @EmbeddedId
     private Pk pk;
 
-    @Embeddable
     @Getter
     @Setter
+    @Embeddable
     public class Pk implements Serializable {
-        @JoinColumn(name="user_uuid")
+        @JoinColumn(name="milestone_id")
         @ManyToOne
-        private User user;
+        private Milestone milestone;
 
-        @JoinColumn(name="project_id")
+        @JoinColumn(name="task_id")
         @ManyToOne
-        private Project project;
+        private Task task;
     }
 }

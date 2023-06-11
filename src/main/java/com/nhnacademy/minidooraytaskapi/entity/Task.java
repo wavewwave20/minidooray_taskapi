@@ -29,10 +29,6 @@ public class Task {
     private LocalDateTime taskEndDate;
 
     @ManyToOne
-    @JoinColumn(name="milestone_id")
-    private Milestone milestone;
-
-    @ManyToOne
     @JoinColumn(name="user_uuid")
     private User user;
 

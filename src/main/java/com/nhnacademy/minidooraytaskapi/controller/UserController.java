@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/taskapi/users")
 public class UserController {
 
     UserService userService;
@@ -19,25 +20,30 @@ public class UserController {
     }
 
 
-    @GetMapping("/taskapi/users/{id}")
+    @GetMapping("/{id}")
     public UserGetDto getUserByUUId(@PathVariable String UUID) {
         return userService.getUserByUUId(UUID);
     }
 
 
-    @PostMapping("/taskapi/signup")
+    @PostMapping("/signup")
     public User create(@RequestBody UserRegisterDto userRegisterDto) {
         return userService.registerUser(userRegisterDto);
     }
 
-    @DeleteMapping("/api/users/{id}")
+    @DeleteMapping("/{id}")
     public void deleteByUUId(@PathVariable String UUID) {
         userService.deleteByUUId(UUID);
     }
 
-    @PutMapping("/api/users/{id}")
-    public void updateByUUId(@PathVariable String UUID, @RequestBody UserRegisterDto userRegisterDto) {
-        userService.updateByUUId(UUID, userRegisterDto);
-    }
+//    @PutMapping("/api/users/{id}")
+//    public void updateByUUId(@PathVariable String UUID, @RequestBody UserRegisterDto userRegisterDto) {
+//        userService.updateByUUId(UUID, userRegisterDto);
+//    }
 
+
+    @GetMapping("/taskapi/users")
+    public String test() {
+        return "test";
+    }
 }

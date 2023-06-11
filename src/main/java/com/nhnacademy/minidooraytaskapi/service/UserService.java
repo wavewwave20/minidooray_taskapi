@@ -7,6 +7,9 @@ import com.nhnacademy.minidooraytaskapi.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UserService {
     UserRepository userRepository;
@@ -42,9 +45,9 @@ public class UserService {
         userRepository.deleteByUserUUID(uuid);
     }
 
-    public void updateByUUId(String uuid, UserRegisterDto userRegisterDto) {
-        userRepository.updateByUserUUID(uuid, userRegisterDto);
-    }
+//    public void updateByUUId(String uuid, UserRegisterDto userRegisterDto) {
+//        userRepository.updateByUserUUID(uuid, userRegisterDto);
+//    }
 
     public UserGetDto getUserByUUId(String uuid) {
         return toUserGetDto(userRepository.findByUserUUID(uuid));
@@ -57,5 +60,19 @@ public class UserService {
         userGetDto.setUserNickName(user.getUserNickname());
         userGetDto.setUserEmail(user.getUserEmail());
         return userGetDto;
+    }
+
+    public UserGetDto getUserByUserId(String userId) {
+        return toUserGetDto(userRepository.findByUserId(userId));
+    }
+
+    public List<UserGetDto> getAllUser() {
+        List<User> users = userRepository.findAll();
+        List<UserGetDto> userGetDtoList = new ArrayList<>();
+
+        for(User user : users) {
+            userGetDtoList.add(toUserGetDto(user));
+        }
+        return userGetDtoList;
     }
 }
