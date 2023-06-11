@@ -1,16 +1,44 @@
 package com.nhnacademy.minidooraytaskapi.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.nhnacademy.minidooraytaskapi.dto.ProjectCreateDto;
+import com.nhnacademy.minidooraytaskapi.dto.ProjectDto;
+import com.nhnacademy.minidooraytaskapi.service.ProjectService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/taskapi/projects")
 public class ProjectController {
 
-    @PostMapping("/create")
-    public void createProject( ) {
+    private final ProjectService projectService;
 
+    public ProjectController(ProjectService projectService) {
+        this.projectService = projectService;
     }
+
+
+    @PostMapping("/create")
+    public void createProject(@RequestBody ProjectCreateDto projectCreateDto) {
+        projectService.projectCreate(projectCreateDto);
+    }
+
+    @GetMapping("/{projectId}")
+    public ResponseEntity<ProjectDto> getProjectById(@PathVariable Long projectId) {
+        ProjectDto projectDto = projectService.getProjectById(projectId);
+        return ResponseEntity.ok(projectDto);
+    }
+
+    //update를 그냥 create으로 사용?
+    @PutMapping("/{projectId}")
+    public void updateProjectById(@PathVariable Long projectId, @RequestBody ProjectDto projectDto) {
+        projectService.updateProjectById(projectId, projectDto);
+    }
+
+    @DeleteMapping("/{projectId}")
+    public void deleteProjectById(@PathVariable Long projectId) {
+        //projectService.deleteProjectById(projectId);
+    }
+
+
+
 }

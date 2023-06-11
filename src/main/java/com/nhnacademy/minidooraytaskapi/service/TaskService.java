@@ -1,5 +1,9 @@
 package com.nhnacademy.minidooraytaskapi.service;
 
+import com.nhnacademy.minidooraytaskapi.dto.ProjectCreateDto;
+import com.nhnacademy.minidooraytaskapi.dto.ProjectDto;
+import com.nhnacademy.minidooraytaskapi.dto.TaskCreateDto;
+import com.nhnacademy.minidooraytaskapi.dto.TaskDto;
 import com.nhnacademy.minidooraytaskapi.entity.Comment;
 import com.nhnacademy.minidooraytaskapi.entity.Project;
 import com.nhnacademy.minidooraytaskapi.entity.Task;
@@ -8,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +22,80 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final CommentRepository commentRepository;
     private final UserTaskRepository userTaskRepository;
+
+    private final UserRepository userRepository;
+
+
+    public List<Task> getAllTask() {
+        return taskRepository.findAll();
+    }
+
+
+    public void createTask(TaskCreateDto taskCreateDto) {
+        Task task = new Task();
+        task.setTaskName(taskCreateDto.getTaskName());
+        task.setTaskContent(taskCreateDto.getTaskContent());
+        task.setTaskCreationDate(taskCreateDto.getTaskCreationDate());
+        task.setTaskEndDate(taskCreateDto.getTaskEndDate());
+        task.setUser(userRepository.findByUserUUID(taskCreateDto.getUserUUID()));
+        task.setProject(projectRepository.findByProjectId(taskCreateDto.getProjectId()));
+
+        taskRepository.save(task);
+    }
+
+    public TaskDto getTaskById(Long taskId) {
+        Optional<Task> taskOptional = taskRepository.findById(taskId);
+        if(taskOptional.isPresent()) {
+            Task task = taskOptional.get();
+            TaskDto taskDto = new TaskDto();
+            taskDto.setTaskId(task.getTaskId());
+            taskDto.setTaskName(task.getTaskName());
+            taskDto.setTaskContent(task.getTaskContent());
+            taskDto.setTaskCreationDate(task.getTaskCreationDate());
+            taskDto.setTaskEndDate(task.getTaskEndDate());
+            taskDto.setUserUUID(task.getUser().getUserUUID());
+            taskDto.setProjectId(task.getProject().getProjectId());
+            return taskDto;
+        } else {
+            return null;
+        }
+    }
+
+    public void updateTaskById(Long taskId, TaskCreateDto taskUpdateDto) {
+        Optional<Task> taskOptional = taskRepository.findById(taskId);
+
+        if(taskOptional.isPresent()) {
+            Task task = taskOptional.get();
+            task.setTaskName(taskUpdateDto.getTaskName());
+            task.setTaskContent(taskUpdateDto.getTaskContent());
+            task.setTaskCreationDate(taskUpdateDto.getTaskCreationDate());
+            task.setTaskEndDate(taskUpdateDto.getTaskEndDate());
+            task.setUser(userRepository.findByUserUUID(taskUpdateDto.getUserUUID()));
+            task.setProject(projectRepository.findByProjectId(taskUpdateDto.getProjectId()));
+            taskRepository.save(task);
+        }
+    }
+
+    public void deleteTaskById(Long taskId) {
+        taskRepository.deleteById(taskId);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //#TODO:기능별로 분화시켜서 별도 Service 클래스로 변경 필요
     //#TODO:상위 프로젝트-하위TASK-하위COMMENT-모두 관장하는 Tag에 대해 정리 필요(조회시 조건?)
@@ -43,27 +122,7 @@ public class TaskService {
     }
 
     //#################### Task ####################
-    public List<Task> getAllTask() {
-        return taskRepository.findAll();
-    }
 
-
-    public Task getTaskById(Long taskId) {
-        return taskRepository.findById(taskId).orElse(null);
-    }
-
-    public Task createTask(Task task) {
-        return taskRepository.save(task);
-    }
-
-    public Task updateTaskById(Long taskId, Task task) {
-        //#TODO:위와 같이 그대로 저장하는지에 대한 확인 필요(TaskId에 대해 영향을 미치지 않는지)
-        return taskRepository.save(task);
-    }
-
-    public void deleteTaskById(Long taskId) {
-        taskRepository.deleteById(taskId);
-    }
 
     //#################### Comment ####################
 
