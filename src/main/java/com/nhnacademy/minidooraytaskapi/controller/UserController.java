@@ -41,9 +41,4 @@ public class UserController {
 //        userService.updateByUUId(UUID, userRegisterDto);
 //    }
 
-
-    @GetMapping("/taskapi/users")
-    public String test() {
-        return "test";
-    }
 }

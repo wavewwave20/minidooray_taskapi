@@ -20,7 +20,7 @@ public class UserProject {
     @Embeddable
     @Getter
     @Setter
-    public class Pk implements Serializable {
+    public static class Pk implements Serializable {
         @JoinColumn(name="user_uuid")
         @ManyToOne
         private User user;
