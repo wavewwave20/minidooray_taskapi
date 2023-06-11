@@ -1,5 +1,6 @@
 package com.nhnacademy.minidooraytaskapi.dto;
 
+import com.nhnacademy.minidooraytaskapi.entity.ProjectStatusEnum;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -11,7 +12,6 @@ public class ProjectDto {
     private Long ProjectId;
     private String ProjectName;
     private String ProjectDescription;
-    private int ProjectStatus;
-    //#TODO ProjectStatus ENUM으로 던지는 대신 Service에서 int 로 받아서 변경처리?
-
+    private ProjectStatusEnum ProjectStatus;
+    private String UserUUID;
 }
