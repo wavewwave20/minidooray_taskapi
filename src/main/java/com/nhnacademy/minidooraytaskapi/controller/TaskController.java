@@ -21,6 +21,7 @@ public class TaskController {
     private final TaskService taskService;
     private final UserTaskService userTaskService;
     private final UserService userService;
+
     //#TODO:생성시에 UserTask 생성하도록 변경했습니다
     @PostMapping("/create")
     public void createTask(TaskCreateDto taskCreateDto) {
@@ -28,7 +29,7 @@ public class TaskController {
         UserGetDto user = userService.getUserByUUId(taskCreateDto.getUserUUID());
         TaskDto task = taskService.getTaskByName(taskCreateDto.getTaskName());
         User userEntity = toUserEntity(user);
-        Task taskEntity = toTaskEntitiy(task);
+        Task taskEntity = toTaskEntity(task);
         userTaskService.createUserTask(userEntity, taskEntity);
     }
 
@@ -47,12 +48,18 @@ public class TaskController {
     public void deleteTaskById(@PathVariable Long taskId) {
         //      taskService.deleteTaskById(taskId);
     }
+
     //#TODO:UserTask를 통해 User UUID로 Task를 조회하도록 추가
     @GetMapping("/user/{userUUID}")
     public TaskDto getTaskByUserUUID(@PathVariable String userUUID) {
         return taskService.getTaskByUserUUID(userUUID);
     }
 
+    //#TODO:UserTask를 통해 Task Name으로 User를 조회하도록 추가
+    @GetMapping("/task/{taskName}")
+    public UserGetDto getUserByTaskName(@PathVariable String taskName) {
+        return userTaskService.getUserByTaskName(taskName);
+    }
 
 
     public User toUserEntity(UserGetDto userGetDto) {
@@ -64,7 +71,7 @@ public class TaskController {
         return user;
     }
 
-    public Task toTaskEntitiy(TaskDto taskDto) {
+    public Task toTaskEntity(TaskDto taskDto) {
         Task task = new Task();
         task.setTaskId(taskDto.getTaskId());
         task.setTaskName(taskDto.getTaskName());
