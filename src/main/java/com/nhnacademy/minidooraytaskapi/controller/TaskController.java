@@ -21,7 +21,7 @@ public class TaskController {
     private final TaskService taskService;
     private final UserTaskService userTaskService;
     private final UserService userService;
-
+    //#TODO:생성시에 UserTask 생성하도록 변경했습니다
     @PostMapping("/create")
     public void createTask(TaskCreateDto taskCreateDto) {
         taskService.createTask(taskCreateDto);
@@ -47,6 +47,13 @@ public class TaskController {
     public void deleteTaskById(@PathVariable Long taskId) {
         //      taskService.deleteTaskById(taskId);
     }
+    //#TODO:UserTask를 통해 User UUID로 Task를 조회하도록 추가
+    @GetMapping("/user/{userUUID}")
+    public TaskDto getTaskByUserUUID(@PathVariable String userUUID) {
+        return taskService.getTaskByUserUUID(userUUID);
+    }
+
+
 
     public User toUserEntity(UserGetDto userGetDto) {
         User user = new User();

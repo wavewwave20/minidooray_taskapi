@@ -147,4 +147,8 @@ public class TaskService {
         taskDto.setProjectId(task.getProject().getProjectId());
         return taskDto;
     }
+
+    public TaskDto getTaskByUserUUID(String userUUID) {
+        return toDto(userTaskRepository.findByUserUUID(userUUID).getPk().getTask());
+    }
 }
