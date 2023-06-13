@@ -2,24 +2,34 @@ package com.nhnacademy.minidooraytaskapi.controller;
 
 import com.nhnacademy.minidooraytaskapi.dto.TaskCreateDto;
 import com.nhnacademy.minidooraytaskapi.dto.TaskDto;
+import com.nhnacademy.minidooraytaskapi.dto.UserGetDto;
+import com.nhnacademy.minidooraytaskapi.entity.Task;
+import com.nhnacademy.minidooraytaskapi.entity.User;
 import com.nhnacademy.minidooraytaskapi.service.TaskService;
+import com.nhnacademy.minidooraytaskapi.service.UserService;
+import com.nhnacademy.minidooraytaskapi.service.UserTaskService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/taskapi/tasks")
 public class TaskController {
 
     private final TaskService taskService;
-
-    public TaskController(TaskService taskService) {
-        this.taskService = taskService;
-    }
+    private final UserTaskService userTaskService;
+    private final UserService userService;
 
     @PostMapping("/create")
     public void createTask(TaskCreateDto taskCreateDto) {
         taskService.createTask(taskCreateDto);
+        UserGetDto user = userService.getUserByUUId(taskCreateDto.getUserUUID());
+        TaskDto task = taskService.getTaskByName(taskCreateDto.getTaskName());
+        User userEntity = toUserEntity(user);
+        Task taskEntity = toTaskEntitiy(task);
+        userTaskService.createUserTask(userEntity, taskEntity);
     }
 
     @GetMapping("/{taskId}")
@@ -35,9 +45,31 @@ public class TaskController {
 
     @DeleteMapping("/{taskId}")
     public void deleteTaskById(@PathVariable Long taskId) {
-  //      taskService.deleteTaskById(taskId);
+        //      taskService.deleteTaskById(taskId);
     }
 
+    public User toUserEntity(UserGetDto userGetDto) {
+        User user = new User();
+        user.setUserUUID(userGetDto.getUserUUID());
+        user.setUserNickname(userGetDto.getUserNickName());
+        user.setUserId(userGetDto.getUserId());
+        user.setUserEmail(userGetDto.getUserEmail());
+        return user;
+    }
+
+    public Task toTaskEntitiy(TaskDto taskDto) {
+        Task task = new Task();
+        task.setTaskId(taskDto.getTaskId());
+        task.setTaskName(taskDto.getTaskName());
+        task.setTaskContent(taskDto.getTaskContent());
+        task.setTaskCreationDate(taskDto.getTaskCreationDate());
+        task.setTaskEndDate(taskDto.getTaskEndDate());
+        task.setUser(toUserEntity(userService.getUserByUUId(taskDto.getUserUUID())));
+        task.setProject(taskService.getProjectById(taskDto.getProjectId()));
+        return task;
+    }
+
+}
 
 
 //    //###################Project Api###################
@@ -122,4 +154,4 @@ public class TaskController {
 //    }
 
 
-}
+

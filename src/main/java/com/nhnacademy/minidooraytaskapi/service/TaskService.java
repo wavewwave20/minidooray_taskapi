@@ -45,7 +45,7 @@ public class TaskService {
 
     public TaskDto getTaskById(Long taskId) {
         Optional<Task> taskOptional = taskRepository.findById(taskId);
-        if(taskOptional.isPresent()) {
+        if (taskOptional.isPresent()) {
             Task task = taskOptional.get();
             TaskDto taskDto = new TaskDto();
             taskDto.setTaskId(task.getTaskId());
@@ -64,7 +64,7 @@ public class TaskService {
     public void updateTaskById(Long taskId, TaskCreateDto taskUpdateDto) {
         Optional<Task> taskOptional = taskRepository.findById(taskId);
 
-        if(taskOptional.isPresent()) {
+        if (taskOptional.isPresent()) {
             Task task = taskOptional.get();
             task.setTaskName(taskUpdateDto.getTaskName());
             task.setTaskContent(taskUpdateDto.getTaskContent());
@@ -79,22 +79,6 @@ public class TaskService {
     public void deleteTaskById(Long taskId) {
         taskRepository.deleteById(taskId);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     //#TODO:기능별로 분화시켜서 별도 Service 클래스로 변경 필요
@@ -146,5 +130,21 @@ public class TaskService {
 
     public void deleteCommentById(Long commentId) {
         commentRepository.deleteById(commentId);
+    }
+
+    public TaskDto getTaskByName(String taskName) {
+        return toDto(taskRepository.findByTaskName(taskName));
+    }
+
+    public TaskDto toDto(Task task) {
+        TaskDto taskDto = new TaskDto();
+        taskDto.setTaskId(task.getTaskId());
+        taskDto.setTaskName(task.getTaskName());
+        taskDto.setTaskContent(task.getTaskContent());
+        taskDto.setTaskCreationDate(task.getTaskCreationDate());
+        taskDto.setTaskEndDate(task.getTaskEndDate());
+        taskDto.setUserUUID(task.getUser().getUserUUID());
+        taskDto.setProjectId(task.getProject().getProjectId());
+        return taskDto;
     }
 }
