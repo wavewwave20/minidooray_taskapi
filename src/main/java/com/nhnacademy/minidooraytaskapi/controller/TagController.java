@@ -24,7 +24,7 @@ public class TagController {
     public TagDto getTagById(@PathVariable Long tagId) {
         return tagService.getTagById(tagId);
     }
-
+    //#TODO: Create Tag는 했는데.. Dto생각좀 해봐야할듯요?
     @PostMapping("/")
     public void createTag(@RequestBody TagDto tagDto) {
         tagService.createTag(tagDto);
@@ -44,5 +44,7 @@ public class TagController {
     public UserGetDto getUserByTagId(@PathVariable Long tagId) {
         return tagService.getUserByTagId(tagId);
     }
+
+    //#TODO: Task Tag Cascade처럼 삭제되는것 확인요망. Task쪽에서 해결해야 할 것 같아요
 
 }
