@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MilestoneService {
@@ -17,10 +20,19 @@ public class MilestoneService {
         return toDto(milestoneRepository.findById(milestoneId).orElseThrow());
     }
 
+    @Transactional(readOnly = true)
+    public List<MilestoneDto> findByProjectId(Long projectId) {
+        List<Milestone> milestoneList = milestoneRepository.findMilestonesByProjectProjectId(projectId);
+        List<MilestoneDto> milestoneDtoList = new ArrayList<>();
+        for (Milestone milestone : milestoneList) {
+            milestoneDtoList.add(toDto(milestone));
+        }
+        return milestoneDtoList;
+    }
+
     @Transactional
     public void createMileStone(MilestoneDto milestoneDto) {
         milestoneRepository.save(toEntity(milestoneDto));
-
     }
 
     @Transactional
@@ -39,6 +51,7 @@ public class MilestoneService {
     }
 
 
+    @Transactional(readOnly = true)
     private MilestoneDto toDto(Milestone milestone) {
         MilestoneDto milestoneDto = new MilestoneDto();
         milestoneDto.setMilestoneId(milestone.getMilestoneId());
@@ -49,6 +62,7 @@ public class MilestoneService {
         return milestoneDto;
     }
 
+    @Transactional(readOnly = true)
     private Milestone toEntity(MilestoneDto milestoneDto) {
         Milestone milestone = new Milestone();
         milestone.setMilestoneId(milestoneDto.getMilestoneId());

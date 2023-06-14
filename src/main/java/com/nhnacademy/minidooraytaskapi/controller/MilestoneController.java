@@ -3,7 +3,10 @@ package com.nhnacademy.minidooraytaskapi.controller;
 import com.nhnacademy.minidooraytaskapi.dto.MilestoneDto;
 import com.nhnacademy.minidooraytaskapi.service.MilestoneService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -14,11 +17,18 @@ public class MilestoneController {
     private final MilestoneService milestoneService;
 
     @GetMapping("/milestone?milestone={milestoneId}")
-    public MilestoneDto getMileStone(@RequestParam Long milestoneId) {
-        return milestoneService.findById(milestoneId);
+    public ResponseEntity<MilestoneDto> getMileStone(@RequestParam Long milestoneId) {
+        MilestoneDto milestoneDto = milestoneService.findById(milestoneId);
+        return ResponseEntity.ok(milestoneDto);
     }
 
-    @PostMapping("/milestone/")
+    @GetMapping("/milestone/list?project={projectId}")
+    public ResponseEntity<List<MilestoneDto>> getMileStoneList(@RequestParam Long projectId) {
+        List<MilestoneDto> milestoneDtos = milestoneService.findByProjectId(projectId);
+        return ResponseEntity.ok(milestoneDtos);
+    }
+
+    @PostMapping("/milestone")
     public void createMileStone(@RequestBody MilestoneDto milestoneDto) {
         milestoneService.createMileStone(milestoneDto);
     }

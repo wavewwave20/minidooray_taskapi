@@ -35,6 +35,16 @@ public class CommentService {
         return toDto(comment);
     }
 
+    @Transactional(readOnly = true)
+    public List<CommentDto> getCommentByTaskId(Long taskId) {
+        List<Comment> commentList = commentRepository.findCommentsByTaskTaskId(taskId);
+        List<CommentDto> commentDtoList = new ArrayList<>();
+        for (Comment comment : commentList) {
+            commentDtoList.add(toDto(comment));
+        }
+        return commentDtoList;
+    }
+
     @Transactional
     public void createComment(CommentDto commentDto) {
         commentRepository.save(toEntity(commentDto));
@@ -52,19 +62,19 @@ public class CommentService {
         commentRepository.deleteById(commentId);
     }
 
-    private CommentDto toDto(Comment comment) {
+    @Transactional(readOnly = true)
+    public CommentDto toDto(Comment comment) {
         CommentDto commentDto = new CommentDto();
         commentDto.setCommentId(comment.getCommentId());
         commentDto.setCommentContent(comment.getCommentContent());
         commentDto.setCommentCreationDate(comment.getCommentCreationDate());
         commentDto.setUserUUID(comment.getUser().getUserUUID());
         commentDto.setTaskId(comment.getTask().getTaskId());
-        //#TODO: commentDto.setTaskId(comment.getTask().getTaskId()); 처럼 처리해도 가능?????
         return commentDto;
     }
 
-    //#TODO: toEntity() 메소드를 이런식으로 써도 되나..?
-    private Comment toEntity(CommentDto commentDto) {
+    @Transactional(readOnly = true)
+    public Comment toEntity(CommentDto commentDto) {
         Comment comment = new Comment();
         comment.setCommentId(commentDto.getCommentId());
         comment.setCommentContent(commentDto.getCommentContent());
