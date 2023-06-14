@@ -60,6 +60,14 @@ public class MilestoneTaskService {
         milestoneTaskRepository.delete(milestoneTask);
     }
 
+    @Transactional
+    public void deleteMilestoneTaskByMilestoneId(Long milestoneId) {
+        List<MilestoneTask> milestoneTasks = milestoneTaskRepository.findMilestoneTasksByPkMilestoneMilestoneId(milestoneId);
+        for(MilestoneTask milestoneTask : milestoneTasks) {
+            milestoneTaskRepository.delete(milestoneTask);
+        }
+    }
+
     public MilestoneTask toEntity(Long milestoneId, Long taskId) {
         MilestoneTask milestoneTask = new MilestoneTask();
         MilestoneTask.Pk pk = new MilestoneTask.Pk();

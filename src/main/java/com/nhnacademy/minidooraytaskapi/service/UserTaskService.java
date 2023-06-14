@@ -43,15 +43,13 @@ public class UserTaskService {
         createUserTask(userTaskCreateDto.getUserUUID(), userTaskCreateDto.getTaskId());
     }
 
-//    public UserGetDto getUserByTaskName(String taskName) {
-//        UserTask userTask = userTaskRepository.findUserByTask(taskRepository.findByTaskName(taskName));
-//        UserGetDto userGetDto = new UserGetDto();
-//        userGetDto.setUserNickName(userTask.getPk().getUser().getUserNickname());
-//        userGetDto.setUserUUID(userTask.getPk().getUser().getUserUUID());
-//        userGetDto.setUserEmail(userTask.getPk().getUser().getUserEmail());
-//        userGetDto.setUserId(userTask.getPk().getUser().getUserId());
-//        return userGetDto;
-//    }
+    @Transactional
+    public void deleteByTaskId(Long taskId) {
+        List<UserTask> userTasks = userTaskRepository.findUserTasksByPkTaskTaskId(taskId);
+        for(UserTask ut : userTasks) {
+            userTaskRepository.delete(ut);
+        }
+    }
 
     @Transactional(readOnly = true)
     public List<UserTaskCreateDto> getUserTaskByUserId(String userUUID) {

@@ -14,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MilestoneService {
     private final MilestoneRepository milestoneRepository;
+    private final MilestoneTaskService milestoneTaskService;
 
     @Transactional(readOnly = true)
     public MilestoneDto findById(Long milestoneId) {
@@ -47,6 +48,7 @@ public class MilestoneService {
 
     @Transactional
     public void deleteMileStone(Long milestoneId) {
+        milestoneTaskService.deleteMilestoneTaskByMilestoneId(milestoneId);
         milestoneRepository.deleteById(milestoneId);
     }
 

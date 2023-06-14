@@ -26,6 +26,10 @@ public class TaskService {
 
     private final UserTaskService userTaskService;
 
+    private final CommentService commentService;
+
+    //private final TaskTagService taskTagService;
+
 
     @Transactional
     public void createTask(TaskCreateDto taskCreateDto) {
@@ -89,6 +93,20 @@ public class TaskService {
     public List<TaskDto> getTaskByAdminUserUUID(String userUUID) {
         List<Task> tasks = taskRepository.findTasksByUserUserUUID(userUUID);
         return taskListToDtoList(tasks);
+    }
+
+    @Transactional
+    public void deleteTaskById(Long taskId) {
+        Optional<Task> taskOptional = taskRepository.findById(taskId);
+        if (taskOptional.isPresent()) {
+            Task task = taskOptional.get();
+            commentService.deleteCommentByTaskId(taskId);
+            userTaskService.deleteByTaskId(taskId);
+            //테스크테그 삭제
+            //TaskTagService.deleteByTaskId(taskId);
+            //마일스톤테스크 삭제
+            //테스크삭제
+        }
     }
 
     public List<TaskDto> taskListToDtoList(List<Task> tasks) {

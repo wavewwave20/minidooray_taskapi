@@ -41,7 +41,7 @@ public class TaskController {
         return ResponseEntity.ok(taskDtos);
     }
 
-    @GetMapping("/task/list?user={userUUID}")
+    @GetMapping("/task/list?admin={userUUID}")
     public ResponseEntity<List<TaskDto>> getTaskByAdminUserUUID(@RequestParam String userUUID) {
         List<TaskDto> taskDtos = taskService.getTaskByAdminUserUUID(userUUID);
         return ResponseEntity.ok(taskDtos);
@@ -54,6 +54,6 @@ public class TaskController {
 
     @DeleteMapping("/task?task={taskId}")
     public void deleteTaskById(@RequestParam Long taskId) {
-        //      taskService.deleteTaskById(taskId);
+        taskService.deleteTaskById(taskId);
     }
 }

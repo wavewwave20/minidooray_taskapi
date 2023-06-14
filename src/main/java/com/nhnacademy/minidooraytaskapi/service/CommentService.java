@@ -62,6 +62,14 @@ public class CommentService {
         commentRepository.deleteById(commentId);
     }
 
+    @Transactional
+    public void deleteCommentByTaskId(Long taskId) {
+        List<Comment> commentList = commentRepository.findCommentsByTaskTaskId(taskId);
+        for (Comment comment : commentList) {
+            commentRepository.deleteById(comment.getCommentId());
+        }
+    }
+
     @Transactional(readOnly = true)
     public CommentDto toDto(Comment comment) {
         CommentDto commentDto = new CommentDto();
