@@ -1,37 +1,35 @@
 package com.nhnacademy.minidooraytaskapi.controller;
 
 import com.nhnacademy.minidooraytaskapi.dto.MilestoneDto;
-import com.nhnacademy.minidooraytaskapi.entity.Milestone;
 import com.nhnacademy.minidooraytaskapi.service.MilestoneService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/taskapi/milestones")
+@RequestMapping("/api")
 public class MilestoneController {
 
     private final MilestoneService milestoneService;
 
-    @GetMapping("/{id}")
-    public MilestoneDto getMileStone(@PathVariable Long milestoneId) {
+    @GetMapping("/milestone?milestone={milestoneId}")
+    public MilestoneDto getMileStone(@RequestParam Long milestoneId) {
         return milestoneService.findById(milestoneId);
     }
 
-    @PostMapping("/")
+    @PostMapping("/milestone/")
     public void createMileStone(@RequestBody MilestoneDto milestoneDto) {
         milestoneService.createMileStone(milestoneDto);
     }
 
-    @PutMapping("/{id}")
-    public void updateMileStone(@PathVariable Long milestoneId, @RequestBody MilestoneDto milestoneDto) {
+    @PutMapping("/milestone?milestone={milestoneId}")
+    public void updateMileStone(@RequestParam Long milestoneId, @RequestBody MilestoneDto milestoneDto) {
         milestoneService.updateMileStone(milestoneId, milestoneDto);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteMileStone(@PathVariable Long milestoneId) {
+    @DeleteMapping("/milestone?milestone={milestoneId}")
+    public void deleteMileStone(@RequestParam Long milestoneId) {
         milestoneService.deleteMileStone(milestoneId);
     }
 

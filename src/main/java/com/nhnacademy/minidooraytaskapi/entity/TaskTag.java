@@ -1,6 +1,7 @@
 package com.nhnacademy.minidooraytaskapi.entity;
 
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,9 @@ public class TaskTag {
     private Pk pk;
 
     @Embeddable
+    @EqualsAndHashCode
+    @Getter
+    @Setter
     public class Pk implements Serializable {
         @JoinColumn(name="task_id")
         @ManyToOne

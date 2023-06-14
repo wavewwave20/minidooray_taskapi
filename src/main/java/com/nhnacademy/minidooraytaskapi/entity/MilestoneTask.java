@@ -1,5 +1,6 @@
 package com.nhnacademy.minidooraytaskapi.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +18,8 @@ public class MilestoneTask {
     @Getter
     @Setter
     @Embeddable
-    public class Pk implements Serializable {
+    @EqualsAndHashCode
+    public static class Pk implements Serializable {
         @JoinColumn(name="milestone_id")
         @ManyToOne
         private Milestone milestone;

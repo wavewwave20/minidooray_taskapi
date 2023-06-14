@@ -18,10 +18,12 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public void deleteAll() {
         userRepository.deleteAll();
     }
 
+    @Transactional
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
@@ -41,6 +43,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    @Transactional
     public void deleteByUUId(String uuid) {
         userRepository.deleteByUserUUID(uuid);
     }
@@ -49,6 +52,7 @@ public class UserService {
 //        userRepository.updateByUserUUID(uuid, userRegisterDto);
 //    }
 
+    @Transactional(readOnly = true)
     public UserGetDto getUserByUUId(String uuid) {
         return toUserGetDto(userRepository.findByUserUUID(uuid));
     }
@@ -62,10 +66,12 @@ public class UserService {
         return userGetDto;
     }
 
+    @Transactional(readOnly = true)
     public UserGetDto getUserByUserId(String userId) {
         return toUserGetDto(userRepository.findByUserId(userId));
     }
 
+    @Transactional(readOnly = true)
     public List<UserGetDto> getAllUser() {
         List<User> users = userRepository.findAll();
         List<UserGetDto> userGetDtoList = new ArrayList<>();

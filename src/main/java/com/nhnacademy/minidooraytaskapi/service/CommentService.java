@@ -7,6 +7,7 @@ import com.nhnacademy.minidooraytaskapi.repository.TaskRepository;
 import com.nhnacademy.minidooraytaskapi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class CommentService {
     private final UserRepository userRepository;
     private final TaskRepository taskRepository;
 
+    @Transactional(readOnly = true)
     public List<CommentDto> getAllComment() {
         List<Comment> commentList = commentRepository.findAll();
         List<CommentDto> commentDtoList = new ArrayList<>();
@@ -27,25 +29,28 @@ public class CommentService {
         return commentDtoList;
     }
 
+    @Transactional(readOnly = true)
     public CommentDto getCommentById(Long commentId) {
         Comment comment = commentRepository.findById(commentId).orElseThrow();
         return toDto(comment);
     }
 
+    @Transactional
     public void createComment(CommentDto commentDto) {
         commentRepository.save(toEntity(commentDto));
     }
 
+    @Transactional
     public void updateCommentById(Long commentId, CommentDto commentDto) {
         Comment comment = commentRepository.findById(commentId).orElseThrow();
         comment.setCommentContent(commentDto.getCommentContent());
         commentRepository.save(comment);
     }
 
+    @Transactional
     public void deleteCommentById(Long commentId) {
         commentRepository.deleteById(commentId);
     }
-
 
     private CommentDto toDto(Comment comment) {
         CommentDto commentDto = new CommentDto();

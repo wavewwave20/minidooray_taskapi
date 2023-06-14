@@ -5,21 +5,25 @@ import com.nhnacademy.minidooraytaskapi.entity.Milestone;
 import com.nhnacademy.minidooraytaskapi.repository.MilestoneRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class MilestoneService {
     private final MilestoneRepository milestoneRepository;
 
+    @Transactional(readOnly = true)
     public MilestoneDto findById(Long milestoneId) {
         return toDto(milestoneRepository.findById(milestoneId).orElseThrow());
     }
 
+    @Transactional
     public void createMileStone(MilestoneDto milestoneDto) {
         milestoneRepository.save(toEntity(milestoneDto));
 
     }
 
+    @Transactional
     public void updateMileStone(Long milestoneId, MilestoneDto milestoneDto) {
         Milestone milestone = milestoneRepository.findById(milestoneId).orElseThrow();
         milestone.setMilestoneName(milestoneDto.getMilestoneName());
@@ -29,6 +33,7 @@ public class MilestoneService {
         milestoneRepository.save(milestone);
     }
 
+    @Transactional
     public void deleteMileStone(Long milestoneId) {
         milestoneRepository.deleteById(milestoneId);
     }

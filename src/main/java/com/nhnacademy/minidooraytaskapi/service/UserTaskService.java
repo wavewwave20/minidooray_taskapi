@@ -1,13 +1,19 @@
 package com.nhnacademy.minidooraytaskapi.service;
 
 import com.nhnacademy.minidooraytaskapi.dto.UserGetDto;
+import com.nhnacademy.minidooraytaskapi.dto.UserTaskCreateDto;
 import com.nhnacademy.minidooraytaskapi.entity.Task;
 import com.nhnacademy.minidooraytaskapi.entity.User;
 import com.nhnacademy.minidooraytaskapi.entity.UserTask;
 import com.nhnacademy.minidooraytaskapi.repository.TaskRepository;
+import com.nhnacademy.minidooraytaskapi.repository.UserRepository;
 import com.nhnacademy.minidooraytaskapi.repository.UserTaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -15,22 +21,64 @@ public class UserTaskService {
     private final UserTaskRepository userTaskRepository;
     private final TaskRepository taskRepository;
 
-    public void createUserTask(User userEntity, Task taskEntity) {
+    private final UserRepository userRepository;
+
+
+    @Transactional
+    public void createUserTask(String userUUID, Long taskId) {
         UserTask userTask = new UserTask();
         UserTask.Pk pk = new UserTask.Pk();
+
+        User userEntity = userRepository.findByUserUUID(userUUID);
+        Task taskEntity = taskRepository.findByTaskId(taskId);
+
         pk.setUser(userEntity);
         pk.setTask(taskEntity);
         userTask.setPk(pk);
         userTaskRepository.save(userTask);
     }
 
-    public UserGetDto getUserByTaskName(String taskName) {
-        UserTask userTask = userTaskRepository.findUserByTask(taskRepository.findByTaskName(taskName));
-        UserGetDto userGetDto = new UserGetDto();
-        userGetDto.setUserNickName(userTask.getPk().getUser().getUserNickname());
-        userGetDto.setUserUUID(userTask.getPk().getUser().getUserUUID());
-        userGetDto.setUserEmail(userTask.getPk().getUser().getUserEmail());
-        userGetDto.setUserId(userTask.getPk().getUser().getUserId());
-        return userGetDto;
+    @Transactional
+    public void createUserTask(UserTaskCreateDto userTaskCreateDto) {
+        createUserTask(userTaskCreateDto.getUserUUID(), userTaskCreateDto.getTaskId());
+    }
+
+//    public UserGetDto getUserByTaskName(String taskName) {
+//        UserTask userTask = userTaskRepository.findUserByTask(taskRepository.findByTaskName(taskName));
+//        UserGetDto userGetDto = new UserGetDto();
+//        userGetDto.setUserNickName(userTask.getPk().getUser().getUserNickname());
+//        userGetDto.setUserUUID(userTask.getPk().getUser().getUserUUID());
+//        userGetDto.setUserEmail(userTask.getPk().getUser().getUserEmail());
+//        userGetDto.setUserId(userTask.getPk().getUser().getUserId());
+//        return userGetDto;
+//    }
+
+    @Transactional(readOnly = true)
+    public List<UserTaskCreateDto> getUserTaskByUserId(String userUUID) {
+        List<UserTask> userTasks = userTaskRepository.findUserTasksByPkUserUserUUID(userUUID);
+        List<UserTaskCreateDto> userTaskCreateDtos = new ArrayList<>();
+
+        for (UserTask ut : userTasks) {
+            UserTaskCreateDto userTaskCreateDto = new UserTaskCreateDto();
+            userTaskCreateDto.setTaskId(ut.getPk().getTask().getTaskId());
+            userTaskCreateDto.setUserUUID(ut.getPk().getUser().getUserUUID());
+            userTaskCreateDtos.add(userTaskCreateDto);
+        }
+        return userTaskCreateDtos;
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserTaskCreateDto> getUserTaskByTaskId(Long taskId) {
+        List<UserTask> userTasks = userTaskRepository.findUserTasksByPkTaskTaskId(taskId);
+        List<UserTaskCreateDto> userTaskCreateDtos = new ArrayList<>();
+
+        for (UserTask ut : userTasks) {
+            UserTaskCreateDto userTaskCreateDto = new UserTaskCreateDto();
+            userTaskCreateDto.setTaskId(ut.getPk().getTask().getTaskId());
+            userTaskCreateDto.setUserUUID(ut.getPk().getUser().getUserUUID());
+            userTaskCreateDtos.add(userTaskCreateDto);
+        }
+        return userTaskCreateDtos;
+
     }
 }

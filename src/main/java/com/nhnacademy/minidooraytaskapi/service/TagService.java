@@ -1,5 +1,6 @@
 package com.nhnacademy.minidooraytaskapi.service;
 
+import com.nhnacademy.minidooraytaskapi.dto.TagCreateDto;
 import com.nhnacademy.minidooraytaskapi.dto.TagDto;
 import com.nhnacademy.minidooraytaskapi.dto.UserGetDto;
 import com.nhnacademy.minidooraytaskapi.entity.Tag;
@@ -8,6 +9,7 @@ import com.nhnacademy.minidooraytaskapi.repository.ProjectRepository;
 import com.nhnacademy.minidooraytaskapi.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,6 +20,7 @@ public class TagService {
 
     private final ProjectRepository projectRepository;
 
+    @Transactional(readOnly = true)
     public List<TagDto> getAllTag() {
         List<Tag> tagList = tagRepository.findAll();
         List<TagDto> tagDtoList = new java.util.ArrayList<>();
@@ -27,30 +30,33 @@ public class TagService {
         return tagDtoList;
     }
 
+    @Transactional(readOnly = true)
     public TagDto getTagById(Long tagId) {
         Tag tag = tagRepository.findById(tagId).orElseThrow();
         return toDto(tag);
     }
 
-    public void createTag(TagDto tagDto) {
+    @Transactional
+    public void createTag(TagCreateDto tagDto) {
         tagRepository.save(toEntity(tagDto));
     }
 
+    @Transactional
     public void updateTagById(Long tagId, TagDto tagDto) {
         Tag tag = tagRepository.findById(tagId).orElseThrow();
         tag.setTagName(tagDto.getTagName());
         tagRepository.save(tag);
     }
 
+    @Transactional
     public void deleteTagById(Long tagId) {
         tagRepository.deleteById(tagId);
     }
 
 
 
-    public Tag toEntity(TagDto tagDto) {
+    public Tag toEntity(TagCreateDto tagDto) {
         Tag tag = new Tag();
-        tag.setTagId(tagDto.getTagId());
         tag.setTagName(tagDto.getTagName());
         tag.setProject(projectRepository.findById(tagDto.getProjectId()).orElseThrow());
         return tag;
@@ -73,7 +79,7 @@ public class TagService {
         return userDto;
     }
 
-
+    @Transactional(readOnly = true)
     public UserGetDto getUserByTagId(Long tagId) {
         User user = tagRepository.findById(tagId).orElseThrow().getProject().getUser();
         return toUserDto(user);

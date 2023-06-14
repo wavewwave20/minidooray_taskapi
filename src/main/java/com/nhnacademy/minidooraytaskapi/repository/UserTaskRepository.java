@@ -6,11 +6,13 @@ import com.nhnacademy.minidooraytaskapi.entity.UserTask;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.tools.DocumentationTool;
+import java.util.List;
 
 public interface UserTaskRepository extends JpaRepository<UserTask, UserTask.Pk> {
-    //#TODO: 여기있는거 다 되는지 확인해봐야할듯함여
-    UserTask findByUserUUID(String userUUID);
+    UserTask findUserTaskByPkUserUserUUID(String userUUID);
 
-    UserTask findUserByTask(Task byTaskName);
+    List<UserTask> findUserTasksByPkTaskTaskId(Long taskId);
+
+    List<UserTask> findUserTasksByPkUserUserUUID(String userUUID);
 
 }

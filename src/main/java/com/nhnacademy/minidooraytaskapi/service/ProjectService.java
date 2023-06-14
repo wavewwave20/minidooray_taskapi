@@ -6,6 +6,7 @@ import com.nhnacademy.minidooraytaskapi.entity.Project;
 import com.nhnacademy.minidooraytaskapi.repository.ProjectRepository;
 import com.nhnacademy.minidooraytaskapi.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -20,6 +21,7 @@ public class ProjectService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public void projectCreate(ProjectCreateDto projectCreateDto) {
 
         Project project = new Project();
@@ -31,6 +33,7 @@ public class ProjectService {
         projectRepository.save(project);
     }
 
+    @Transactional(readOnly = true)
     public ProjectDto getProjectById(Long projectId) {
         Optional<Project> projectOptional = projectRepository.findById(projectId);
 
@@ -49,6 +52,7 @@ public class ProjectService {
     }
 
     //TODO: update용 dto 따로 안만듦
+    @Transactional
     public void updateProjectById(Long projectId, ProjectDto projectDto) {
         Optional<Project> projectOptional = projectRepository.findById(projectId);
 
