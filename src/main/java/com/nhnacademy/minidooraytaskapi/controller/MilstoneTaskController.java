@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/api/task")
 public class MilstoneTaskController {
 
     private final MilestoneTaskService milestoneTaskService;
@@ -19,26 +19,28 @@ public class MilstoneTaskController {
         this.milestoneTaskService = milestoneTaskService;
     }
 
-    @PostMapping("/milestone-task?milestone={milestoneId}&task={taskId}")
-    public void createMilestoneTask(@RequestParam Long milestoneId, @RequestParam Long taskId) {
+    @PostMapping("/milestones/{milestoneId}/tasks/{taskId}")
+    public ResponseEntity<?> createMilestoneTask(@PathVariable Long milestoneId, @PathVariable Long taskId) {
         milestoneTaskService.createMilestoneTask(milestoneId, taskId);
+        return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/milestone-task/list?task={taskId}")
-    public ResponseEntity<List<MilestoneDto>> getMilestonesByTask(@RequestParam Long taskId) {
+    @GetMapping("/tasks/{taskId}/milestones")
+    public ResponseEntity<List<MilestoneDto>> getMilestonesByTask(@PathVariable Long taskId) {
         List<MilestoneDto> milestoneDtos = milestoneTaskService.getMilestonesByTask(taskId);
         return ResponseEntity.ok(milestoneDtos);
 
     }
 
-    @GetMapping("/milestone-task/list?milestone={milestoneId}")
-    public ResponseEntity<List<TaskDto>> getTasksByMilestone(@RequestParam Long milestoneId) {
+    @GetMapping("/milestones/{milestoneId}/tasks")
+    public ResponseEntity<List<TaskDto>> getTasksByMilestone(@PathVariable Long milestoneId) {
         List<TaskDto> taskDtos = milestoneTaskService.getTasksByMilestone(milestoneId);
         return ResponseEntity.ok(taskDtos);
     }
 
-    @DeleteMapping("/milestone-task?milestone={milestoneId}&task={taskId}")
-    public void deleteMilestoneTask(@RequestParam Long milestoneId, @RequestParam Long taskId) {
+    @DeleteMapping("/milestones/{milestoneId}/tasks/{taskId}")
+    public ResponseEntity<?> deleteMilestoneTask(@PathVariable Long milestoneId, @PathVariable Long taskId) {
         milestoneTaskService.deleteMilestoneTask(milestoneId, taskId);
+        return ResponseEntity.ok().build();
     }
 }

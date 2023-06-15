@@ -170,4 +170,21 @@ GET http://localhost:9091/api/task/milestones/projects/5
 
 ###
 
+#Milestones-Tasks
+
+POST http://localhost:9091/api/task/milestones/4/tasks/12
+
+###
+
+GET http://localhost:9091/api/task/tasks/12/milestones
+###
+
+
+GET http://localhost:9091/api/task/milestones/3/tasks
+
+###
+
+DELETE http://localhost:9091/api/task/milestones/4/tasks/12
+
+
 

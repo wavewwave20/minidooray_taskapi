@@ -58,6 +58,7 @@ public class MilestoneTaskService {
             taskDto.setTaskCreationDate(task.getTaskCreationDate());
             taskDto.setUserUUID(milestoneTask.getPk().getTask().getUser().getUserUUID());
             taskDto.setProjectId(milestoneTask.getPk().getTask().getProject().getProjectId());
+            taskDtos.add(taskDto);
         }
         return taskDtos;
     }
