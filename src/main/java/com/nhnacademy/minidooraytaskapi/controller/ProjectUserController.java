@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/task")
 public class ProjectUserController {
 
     private final ProjectUserService projectUserService;
@@ -19,32 +19,31 @@ public class ProjectUserController {
     }
 
 
-    @PostMapping("/project-user?project={projectId}&user={userUUID}")
+    @PostMapping("/projects/{projectId}/users/{userUUID}")
     public void addProjectUser(@PathVariable Long projectId, @PathVariable String userUUID) {
         projectUserService.addProjectUser(projectId, userUUID);
     }
 
-    @GetMapping("/project-user/list?project={projectId}")
+    @GetMapping("/projects/{projectId}/users")
     public ResponseEntity<List<UserGetDto>> getProjectUserAll(@PathVariable Long projectId) {
         List<UserGetDto> userGetDtoList = projectUserService.getAllUsers(projectId);
         return ResponseEntity.ok(userGetDtoList);
     }
 
-    @GetMapping("/project-user/list?user={userUUID}")
+    @GetMapping("/users/{userUUID}/projects")
     public ResponseEntity<List<ProjectDto>> getProjectAllUser(@PathVariable String userUUID) {
         List<ProjectDto> projectDtoList = projectUserService.getAllProjects(userUUID);
         return ResponseEntity.ok(projectDtoList);
     }
 
-    @DeleteMapping("/project-user?project={projectId}&user={userUUID}")
+    @DeleteMapping("/projects/{projectId}/users/{userUUID}")
     public void deleteProjectUser(@PathVariable Long projectId, @PathVariable String userUUID) {
         projectUserService.deleteProjectUser(projectId, userUUID);
     }
 
-    @DeleteMapping("/project-user?project={projectId}")
+    @DeleteMapping("/users/projects/{projectId}")
     public void deleteProjectByProjectId(@PathVariable Long projectId) {
         projectUserService.deleteProjectByProjectId(projectId);
     }
-
 
 }

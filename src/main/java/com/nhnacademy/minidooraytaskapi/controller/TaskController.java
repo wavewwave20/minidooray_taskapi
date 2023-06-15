@@ -2,16 +2,12 @@ package com.nhnacademy.minidooraytaskapi.controller;
 
 import com.nhnacademy.minidooraytaskapi.dto.TaskCreateDto;
 import com.nhnacademy.minidooraytaskapi.dto.TaskDto;
-import com.nhnacademy.minidooraytaskapi.dto.UserGetDto;
-import com.nhnacademy.minidooraytaskapi.entity.Task;
-import com.nhnacademy.minidooraytaskapi.entity.User;
 import com.nhnacademy.minidooraytaskapi.service.TaskService;
 import com.nhnacademy.minidooraytaskapi.service.UserService;
 import com.nhnacademy.minidooraytaskapi.service.UserTaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 

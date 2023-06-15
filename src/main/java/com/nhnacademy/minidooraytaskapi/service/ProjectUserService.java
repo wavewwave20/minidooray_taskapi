@@ -57,7 +57,7 @@ public class ProjectUserService {
             UserGetDto userGetDto = new UserGetDto();
             userGetDto.setUserUUID(user.getUserUUID());
             userGetDto.setUserId(user.getUserId());
-            userGetDto.setUserEmail(user.getUserEmail());
+            userGetDto.setUserNickName(user.getUserNickname());
             userGetDto.setUserEmail(user.getUserEmail());
             userGetDtoList.add(userGetDto);
         }

@@ -65,4 +65,25 @@ Content-Type: application/json
 DELETE http://localhost:9091/api/task/projects/12
 
 ###
+#project-users
+
+POST http://localhost:9091/api/task/projects/4/users/fc51ea9c-637a-4374-b007-df8592daeb5c
+
+###
+
+GET http://localhost:9091/api/task/projects/4/users
+
+###
+
+GET http://localhost:9091/api/task/users/fc51ea9c-637a-4374-b007-df8592daeb5c/projects
+
+###
+
+DELETE http://localhost:9091/api/task/projects/4/users/fc51ea9c-637a-4374-b007-df8592daeb5c
+
+###
+
+DELETE http://localhost:9091/api/task/projects/4
+
+###
 
