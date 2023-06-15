@@ -1,6 +1,5 @@
 package com.nhnacademy.minidooraytaskapi.service;
 
-import com.nhnacademy.minidooraytaskapi.dto.UserGetDto;
 import com.nhnacademy.minidooraytaskapi.dto.UserTaskCreateDto;
 import com.nhnacademy.minidooraytaskapi.entity.Task;
 import com.nhnacademy.minidooraytaskapi.entity.User;

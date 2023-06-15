@@ -63,7 +63,6 @@ public class ProjectService {
         }
     }
 
-    //TODO: update용 dto 따로 안만듦
     @Transactional
     public void updateProjectById(Long projectId, ProjectDto projectDto) {
         Optional<Project> projectOptional = projectRepository.findById(projectId);

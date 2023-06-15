@@ -1,6 +1,5 @@
 package com.nhnacademy.minidooraytaskapi.repository;
 
-import com.nhnacademy.minidooraytaskapi.entity.User;
 import com.nhnacademy.minidooraytaskapi.entity.UserProject;
 import org.springframework.data.jpa.repository.JpaRepository;
 

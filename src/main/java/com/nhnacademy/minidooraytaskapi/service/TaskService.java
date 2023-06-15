@@ -1,12 +1,7 @@
 package com.nhnacademy.minidooraytaskapi.service;
 
-import com.nhnacademy.minidooraytaskapi.dto.ProjectCreateDto;
-import com.nhnacademy.minidooraytaskapi.dto.ProjectDto;
 import com.nhnacademy.minidooraytaskapi.dto.TaskCreateDto;
 import com.nhnacademy.minidooraytaskapi.dto.TaskDto;
-import com.nhnacademy.minidooraytaskapi.entity.Comment;
-import com.nhnacademy.minidooraytaskapi.entity.MilestoneTask;
-import com.nhnacademy.minidooraytaskapi.entity.Project;
 import com.nhnacademy.minidooraytaskapi.entity.Task;
 import com.nhnacademy.minidooraytaskapi.repository.*;
 import lombok.RequiredArgsConstructor;
