@@ -11,33 +11,33 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/task")
 public class TagController {
 
     private final TagService tagService;
 
-    @GetMapping("/tag?tag={tagId}")
-    public TagDto getTagById(@RequestParam Long tagId) {
+    @GetMapping("/tags/{tagId}")
+    public TagDto getTagById(@PathVariable Long tagId) {
         return tagService.getTagById(tagId);
     }
 
-    @GetMapping("/tag/list?project={projectId}")
-    public ResponseEntity<List<TagDto>> getTagsByProjectId(@RequestParam Long projectId) {
+    @GetMapping("/tags/projects/{projectId}")
+    public ResponseEntity<List<TagDto>> getTagsByProjectId(@PathVariable Long projectId) {
         List<TagDto> tagDtos = tagService.getTagsByProjectId(projectId);
         return ResponseEntity.ok(tagDtos);
     }
 
-    @PostMapping("/tag")
+    @PostMapping("/tags")
     public void createTag(@RequestBody TagCreateDto tagCreateDto) {
         tagService.createTag(tagCreateDto);
     }
 
-    @PutMapping("/tag?tag={tagId}")
-    public void updateTagById(@RequestParam Long tagId, @RequestBody TagDto tagDto) {
+    @PutMapping("/tags/{tagId}")
+    public void updateTagById(@PathVariable Long tagId, @RequestBody TagDto tagDto) {
         tagService.updateTagById(tagId, tagDto);
     }
 
-    @DeleteMapping("/tag?tag={tagId}")
+    @DeleteMapping("/tags/{tagId}")
     public void deleteTagById(@PathVariable Long tagId) {
         tagService.deleteTagById(tagId);
     }

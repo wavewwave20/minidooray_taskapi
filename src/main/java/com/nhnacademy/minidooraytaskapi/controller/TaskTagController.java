@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/api/task")
 public class TaskTagController {
 
     private final TaskTagService taskTagService;
@@ -19,27 +19,27 @@ public class TaskTagController {
         this.taskTagService = taskTagService;
     }
 
-    @PostMapping("/task-tag?task={taskId}&tag={tagId}")
-    public void createTaskTag(@RequestParam Long taskId, @RequestParam Long tagId) {
+    @PostMapping("/tasks/{taskId}/tags/{tagId}")
+    public ResponseEntity<?> createTaskTag(@PathVariable Long taskId, @PathVariable Long tagId) {
         taskTagService.createTaskTag(taskId, tagId);
+        return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/task-tag/list?task={taskId}")
-    public ResponseEntity<List<TagDto>> getTagsByTask(@RequestParam Long taskId) {
+    @GetMapping("/tasks/{taskId}/tags")
+    public ResponseEntity<List<TagDto>> getTagsByTask(@PathVariable Long taskId) {
         List<TagDto> tagDtos = taskTagService.getTagsByTask(taskId);
         return ResponseEntity.ok(tagDtos);
     }
 
-    @GetMapping("/task-tag/list?tag={tagId}")
-    public ResponseEntity<List<TaskDto>> getTasksByTag(@RequestParam Long tagId) {
+    @GetMapping("/tags/{tagId}/tasks")
+    public ResponseEntity<List<TaskDto>> getTasksByTag(@PathVariable Long tagId) {
         List<TaskDto> taskDtos = taskTagService.getTasksByTag(tagId);
         return ResponseEntity.ok(taskDtos);
     }
 
-    @DeleteMapping("/task-tag?task={taskId}&tag={tagId}")
-    public void deleteTaskTag(@RequestParam Long taskId, @RequestParam Long tagId) {
+    @DeleteMapping("/tasks/{taskId}/tags/{tagId}")
+    public ResponseEntity<?> deleteTaskTag(@PathVariable Long taskId, @PathVariable Long tagId) {
         taskTagService.deleteTaskTag(taskId, tagId);
+        return ResponseEntity.ok().build();
     }
-
-
 }

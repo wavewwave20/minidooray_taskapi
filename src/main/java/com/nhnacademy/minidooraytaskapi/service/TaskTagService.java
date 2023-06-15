@@ -46,6 +46,7 @@ public class TaskTagService {
             TagDto tagDto = new TagDto();
             tagDto.setTagId(taskTag.getPk().getTag().getTagId());
             tagDto.setTagName(taskTag.getPk().getTag().getTagName());
+            tagDto.setProjectId(taskTag.getPk().getTag().getProject().getProjectId());
             tagDtos.add(tagDto);
         }
         return tagDtos;
@@ -59,6 +60,11 @@ public class TaskTagService {
             TaskDto taskDto = new TaskDto();
             taskDto.setTaskId(taskTag.getPk().getTask().getTaskId());
             taskDto.setTaskName(taskTag.getPk().getTask().getTaskName());
+            taskDto.setTaskContent(taskTag.getPk().getTask().getTaskContent());
+            taskDto.setTaskCreationDate(taskTag.getPk().getTask().getTaskCreationDate());
+            taskDto.setTaskEndDate(taskTag.getPk().getTask().getTaskEndDate());
+            taskDto.setUserUUID(taskTag.getPk().getTask().getUser().getUserUUID());
+            taskDto.setProjectId(taskTag.getPk().getTask().getProject().getProjectId());
             taskDtos.add(taskDto);
         }
         return taskDtos;

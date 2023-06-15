@@ -186,5 +186,50 @@ GET http://localhost:9091/api/task/milestones/3/tasks
 
 DELETE http://localhost:9091/api/task/milestones/4/tasks/12
 
+###
+#tag
+
+POST http://localhost:9091/api/task/tags
+Content-Type: application/json
+
+{
+  "tagName": "testTagName",
+  "projectId": 5
+}
+
+###
+PUT http://localhost:9091/api/task/tags/2
+Content-Type: application/json
+
+{
+  "tagName": "update testTagName"
+}
+
+###
+GET http://localhost:9091/api/task/tags/1
+
+###
+
+GET http://localhost:9091/api/task/tags/projects/5
+
+###
+
+DELETE http://localhost:9091/api/task/tags/2
+
+###
+
+#tag-tasks
+POST http://localhost:9091/api/task/tasks/12/tags/1
+
+###
+GET http://localhost:9091/api/task/tasks/12/tags
+
+###
+GET http://localhost:9091/api/task/tags/1/tasks
+
+###
+DELETE http://localhost:9091/api/task/tasks/12/tags/1
+
+###
 
 
