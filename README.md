@@ -3,6 +3,24 @@
 
 ## user
 
+### POST /api/projects/{projectId}/users/{userUUID}
+- Description: 특정 프로젝트에 사용자 추가
+- Path Variables: 
+    - projectId: 프로젝트 ID
+    - userUUID: 사용자 UUID
+
+JSON 형식 요청 파라미터
+|파라미터|타입|필수 여부|설명|
+|---|---|-|-----|
+|파라미터|타입|필수 여부|설명|
+|파라미터|타입|필수 여부|설명|
+
+JSON 형식 응답
+|파라미터|타입|필수 여부|설명|
+|---|---|-|-----|
+|파라미터|타입|필수 여부|설명|
+|파라미터|타입|필수 여부|설명|
+
 
 ## project
 
