@@ -13,43 +13,43 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/task")
 public class TaskController {
 
     private final TaskService taskService;
     private final UserTaskService userTaskService;
     private final UserService userService;
 
-    @PostMapping("/task")
-    public void createTask(TaskCreateDto taskCreateDto) {
+    @PostMapping("/tasks")
+    public void createTask(@RequestBody TaskCreateDto taskCreateDto) {
         taskService.createTask(taskCreateDto);
     }
 
-    @GetMapping("/task")
-    public ResponseEntity<TaskDto> getTaskById(@RequestParam Long taskId) {
+    @GetMapping("/tasks/{taskId}")
+    public ResponseEntity<TaskDto> getTaskById(@PathVariable Long taskId) {
         TaskDto taskDto = taskService.getTaskById(taskId);
         return ResponseEntity.ok(taskDto);
     }
 
-    @GetMapping("/task/list?project={projectId}")
-    public ResponseEntity<List<TaskDto>> getTaskByProjectId(@RequestParam Long projectId) {
+    @GetMapping("/tasks/projects/{projectId}")
+    public ResponseEntity<List<TaskDto>> getTaskByProjectId(@PathVariable Long projectId) {
         List<TaskDto> taskDtos = taskService.getTaskByProjectId(projectId);
         return ResponseEntity.ok(taskDtos);
     }
 
-    @GetMapping("/task/list?admin={userUUID}")
-    public ResponseEntity<List<TaskDto>> getTaskByAdminUserUUID(@RequestParam String userUUID) {
+    @GetMapping("/tasks/users/{userUUID}/admin")
+    public ResponseEntity<List<TaskDto>> getTaskByAdminUserUUID(@PathVariable String userUUID) {
         List<TaskDto> taskDtos = taskService.getTaskByAdminUserUUID(userUUID);
         return ResponseEntity.ok(taskDtos);
     }
 
-    @PutMapping("/task?task={taskId}")
-    public void updateTaskById(@RequestParam Long taskId, @RequestBody TaskCreateDto taskCreateDto) {
+    @PutMapping("/tasks/{taskId}")
+    public void updateTaskById(@PathVariable Long taskId, @RequestBody TaskCreateDto taskCreateDto) {
         taskService.updateTaskById(taskId, taskCreateDto);
     }
 
-    @DeleteMapping("/task?task={taskId}")
-    public void deleteTaskById(@RequestParam Long taskId) {
+    @DeleteMapping("/tasks/{taskId}")
+    public void deleteTaskById(@PathVariable Long taskId) {
         taskService.deleteTaskById(taskId);
     }
 }

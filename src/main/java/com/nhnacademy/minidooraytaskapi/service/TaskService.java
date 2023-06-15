@@ -3,6 +3,7 @@ package com.nhnacademy.minidooraytaskapi.service;
 import com.nhnacademy.minidooraytaskapi.dto.TaskCreateDto;
 import com.nhnacademy.minidooraytaskapi.dto.TaskDto;
 import com.nhnacademy.minidooraytaskapi.entity.Task;
+import com.nhnacademy.minidooraytaskapi.entity.User;
 import com.nhnacademy.minidooraytaskapi.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,21 +36,21 @@ public class TaskService {
         task.setTaskContent(taskCreateDto.getTaskContent());
         task.setTaskCreationDate(taskCreateDto.getTaskCreationDate());
         task.setTaskEndDate(taskCreateDto.getTaskEndDate());
+
         task.setUser(userRepository.findByUserUUID(taskCreateDto.getUserUUID()));
         task.setProject(projectRepository.findByProjectId(taskCreateDto.getProjectId()));
 
         Task savedTask = taskRepository.save(task);
 
         userTaskService.createUserTask(taskCreateDto.getUserUUID(), savedTask.getTaskId());
-
     }
 
     @Transactional(readOnly = true)
     public TaskDto getTaskById(Long taskId) {
         Optional<Task> taskOptional = taskRepository.findById(taskId);
+        TaskDto taskDto = new TaskDto();
         if (taskOptional.isPresent()) {
             Task task = taskOptional.get();
-            TaskDto taskDto = new TaskDto();
             taskDto.setTaskId(task.getTaskId());
             taskDto.setTaskName(task.getTaskName());
             taskDto.setTaskContent(task.getTaskContent());
@@ -57,10 +58,9 @@ public class TaskService {
             taskDto.setTaskEndDate(task.getTaskEndDate());
             taskDto.setUserUUID(task.getUser().getUserUUID());
             taskDto.setProjectId(task.getProject().getProjectId());
-            return taskDto;
-        } else {
-            return null;
+
         }
+        return taskDto;
     }
 
     @Transactional
@@ -73,8 +73,6 @@ public class TaskService {
             task.setTaskContent(taskUpdateDto.getTaskContent());
             task.setTaskCreationDate(taskUpdateDto.getTaskCreationDate());
             task.setTaskEndDate(taskUpdateDto.getTaskEndDate());
-            task.setUser(userRepository.findByUserUUID(taskUpdateDto.getUserUUID()));
-            task.setProject(projectRepository.findByProjectId(taskUpdateDto.getProjectId()));
             taskRepository.save(task);
         }
     }

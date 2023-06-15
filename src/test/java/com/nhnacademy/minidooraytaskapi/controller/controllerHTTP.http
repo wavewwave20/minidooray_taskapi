@@ -87,3 +87,48 @@ DELETE http://localhost:9091/api/task/projects/4
 
 ###
 
+#Tasks
+
+POST http://localhost:9091/api/task/tasks
+Content-Type: application/json
+
+{
+    "taskName": "testTaskName",
+    "taskContent": "testTaskContent",
+    "taskCreationDate": "2020-01-01T00:00:00",
+    "taskEndDate": "2020-01-01T00:00:00",
+    "userUUID": "fc51ea9c-637a-4374-b007-df8592daeb5c",
+    "projectId": 5
+}
+
+###
+
+GET http://localhost:9091/api/task/tasks/12
+
+###
+
+GET http://localhost:9091/api/task/tasks/projects/5
+
+###
+
+GET http://localhost:9091/api/task/tasks/users/fc51ea9c-637a-4374-b007-df8592daeb5c/admin
+
+###
+
+PUT http://localhost:9091/api/task/tasks/12
+Content-Type: application/json
+
+{
+  "taskName": "update testTaskName",
+  "taskContent": "update testTaskContent",
+  "taskCreationDate": "2020-01-01T00:00:00",
+  "taskEndDate": "2020-01-01T00:00:00"
+}
+
+###
+
+DELETE http://localhost:9091/api/task/tasks/13
+
+###
+
+
