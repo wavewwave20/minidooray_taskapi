@@ -1,5 +1,6 @@
 package com.nhnacademy.minidooraytaskapi.controller;
 
+import com.nhnacademy.minidooraytaskapi.dto.MilestoneCreateDto;
 import com.nhnacademy.minidooraytaskapi.dto.MilestoneDto;
 import com.nhnacademy.minidooraytaskapi.service.MilestoneService;
 import lombok.RequiredArgsConstructor;
@@ -11,35 +12,35 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/task")
 public class MilestoneController {
 
     private final MilestoneService milestoneService;
 
-    @GetMapping("/milestone?milestone={milestoneId}")
-    public ResponseEntity<MilestoneDto> getMileStone(@RequestParam Long milestoneId) {
+    @GetMapping("/milestones/{milestoneId}")
+    public ResponseEntity<MilestoneDto> getMileStone(@PathVariable Long milestoneId) {
         MilestoneDto milestoneDto = milestoneService.findById(milestoneId);
         return ResponseEntity.ok(milestoneDto);
     }
 
-    @GetMapping("/milestone/list?project={projectId}")
-    public ResponseEntity<List<MilestoneDto>> getMileStoneList(@RequestParam Long projectId) {
+    @GetMapping("/milestones/projects/{projectId}")
+    public ResponseEntity<List<MilestoneDto>> getMileStoneList(@PathVariable Long projectId) {
         List<MilestoneDto> milestoneDtos = milestoneService.findByProjectId(projectId);
         return ResponseEntity.ok(milestoneDtos);
     }
 
-    @PostMapping("/milestone")
-    public void createMileStone(@RequestBody MilestoneDto milestoneDto) {
+    @PostMapping("/milestones")
+    public void createMileStone(@RequestBody MilestoneCreateDto milestoneDto) {
         milestoneService.createMileStone(milestoneDto);
     }
 
-    @PutMapping("/milestone?milestone={milestoneId}")
-    public void updateMileStone(@RequestParam Long milestoneId, @RequestBody MilestoneDto milestoneDto) {
+    @PutMapping("/milestones/{milestoneId}")
+    public void updateMileStone(@PathVariable Long milestoneId, @RequestBody MilestoneCreateDto milestoneDto) {
         milestoneService.updateMileStone(milestoneId, milestoneDto);
     }
 
-    @DeleteMapping("/milestone?milestone={milestoneId}")
-    public void deleteMileStone(@RequestParam Long milestoneId) {
+    @DeleteMapping("/milestones/{milestoneId}")
+    public void deleteMileStone(@PathVariable Long milestoneId) {
         milestoneService.deleteMileStone(milestoneId);
     }
 

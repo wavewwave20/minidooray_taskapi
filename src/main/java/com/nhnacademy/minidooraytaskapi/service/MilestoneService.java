@@ -1,8 +1,10 @@
 package com.nhnacademy.minidooraytaskapi.service;
 
+import com.nhnacademy.minidooraytaskapi.dto.MilestoneCreateDto;
 import com.nhnacademy.minidooraytaskapi.dto.MilestoneDto;
 import com.nhnacademy.minidooraytaskapi.entity.Milestone;
 import com.nhnacademy.minidooraytaskapi.repository.MilestoneRepository;
+import com.nhnacademy.minidooraytaskapi.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,8 @@ import java.util.List;
 public class MilestoneService {
     private final MilestoneRepository milestoneRepository;
     private final MilestoneTaskService milestoneTaskService;
+
+    private final ProjectRepository projectRepository;
 
     @Transactional(readOnly = true)
     public MilestoneDto findById(Long milestoneId) {
@@ -32,12 +36,18 @@ public class MilestoneService {
     }
 
     @Transactional
-    public void createMileStone(MilestoneDto milestoneDto) {
-        milestoneRepository.save(toEntity(milestoneDto));
+    public void createMileStone(MilestoneCreateDto milestoneDto) {
+        Milestone milestone = new Milestone();
+        milestone.setMilestoneName(milestoneDto.getMilestoneName());
+        milestone.setMilestoneStartDate(milestoneDto.getMilestoneStartDate());
+        milestone.setMilestoneEndDate(milestoneDto.getMilestoneEndDate());
+        milestone.setMilestoneStatus(milestoneDto.getMilestoneStatus());
+        milestone.setProject(projectRepository.findById(milestoneDto.getProjectId()).orElseThrow());
+        milestoneRepository.save(milestone);
     }
 
     @Transactional
-    public void updateMileStone(Long milestoneId, MilestoneDto milestoneDto) {
+    public void updateMileStone(Long milestoneId, MilestoneCreateDto milestoneDto) {
         Milestone milestone = milestoneRepository.findById(milestoneId).orElseThrow();
         milestone.setMilestoneName(milestoneDto.getMilestoneName());
         milestone.setMilestoneStartDate(milestoneDto.getMilestoneStartDate());
@@ -54,29 +64,19 @@ public class MilestoneService {
 
 
     @Transactional(readOnly = true)
-    private MilestoneDto toDto(Milestone milestone) {
+    public MilestoneDto toDto(Milestone milestone) {
         MilestoneDto milestoneDto = new MilestoneDto();
         milestoneDto.setMilestoneId(milestone.getMilestoneId());
         milestoneDto.setMilestoneName(milestone.getMilestoneName());
         milestoneDto.setMilestoneStartDate(milestone.getMilestoneStartDate());
         milestoneDto.setMilestoneEndDate(milestone.getMilestoneEndDate());
         milestoneDto.setMilestoneStatus(milestone.getMilestoneStatus());
+        milestoneDto.setProjectId(milestone.getProject().getProjectId());
         return milestoneDto;
     }
 
-    @Transactional(readOnly = true)
-    private Milestone toEntity(MilestoneDto milestoneDto) {
-        Milestone milestone = new Milestone();
-        milestone.setMilestoneId(milestoneDto.getMilestoneId());
-        milestone.setMilestoneName(milestoneDto.getMilestoneName());
-        milestone.setMilestoneStartDate(milestoneDto.getMilestoneStartDate());
-        milestone.setMilestoneEndDate(milestoneDto.getMilestoneEndDate());
-        milestone.setMilestoneStatus(milestoneDto.getMilestoneStatus());
-        return milestone;
-    }
-
     @Transactional
-    void deleteMilestoneByProjectId(Long projectId) {
+    public void deleteMilestoneByProjectId(Long projectId) {
         milestoneRepository.deleteMilestonesByProjectProjectId(projectId);
     }
 
