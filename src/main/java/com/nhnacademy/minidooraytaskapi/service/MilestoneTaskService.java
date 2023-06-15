@@ -2,7 +2,9 @@ package com.nhnacademy.minidooraytaskapi.service;
 
 import com.nhnacademy.minidooraytaskapi.dto.MilestoneDto;
 import com.nhnacademy.minidooraytaskapi.dto.TaskDto;
+import com.nhnacademy.minidooraytaskapi.entity.Milestone;
 import com.nhnacademy.minidooraytaskapi.entity.MilestoneTask;
+import com.nhnacademy.minidooraytaskapi.entity.Task;
 import com.nhnacademy.minidooraytaskapi.repository.MilestoneRepository;
 import com.nhnacademy.minidooraytaskapi.repository.MilestoneTaskRepository;
 import com.nhnacademy.minidooraytaskapi.repository.TaskRepository;
@@ -22,17 +24,21 @@ public class MilestoneTaskService {
 
     private final TaskRepository taskRepository;
 
-    private final MilestoneService milestoneService;
-
-    private final TaskService taskService;
-
     @Transactional(readOnly = true)
     public List<MilestoneDto> getMilestonesByTask(Long taskId) {
         List<MilestoneTask> milestoneTasks = milestoneTaskRepository.findMilestoneTasksByPkTaskTaskId(taskId);
         List<MilestoneDto> milestoneDtos = new ArrayList<>();
 
         for(MilestoneTask milestoneTask : milestoneTasks) {
-            milestoneDtos.add(milestoneService.findById(milestoneTask.getPk().getMilestone().getMilestoneId()));
+            Milestone milestone = milestoneTask.getPk().getMilestone();
+            MilestoneDto milestoneDto = new MilestoneDto();
+            milestoneDto.setMilestoneId(milestone.getMilestoneId());
+            milestoneDto.setMilestoneName(milestone.getMilestoneName());
+            milestoneDto.setMilestoneStartDate(milestone.getMilestoneStartDate());
+            milestoneDto.setMilestoneEndDate(milestone.getMilestoneEndDate());
+            milestoneDto.setMilestoneStatus(milestone.getMilestoneStatus());
+            milestoneDto.setProjectId(milestoneTask.getPk().getMilestone().getProject().getProjectId());
+            milestoneDtos.add(milestoneDto);
         }
         return milestoneDtos;
     }
@@ -43,7 +49,15 @@ public class MilestoneTaskService {
         List<TaskDto> taskDtos = new ArrayList<>();
 
         for(MilestoneTask milestoneTask : milestoneTasks) {
-            taskDtos.add(taskService.getTaskById(milestoneTask.getPk().getTask().getTaskId()));
+            Task task = milestoneTask.getPk().getTask();
+            TaskDto taskDto = new TaskDto();
+            taskDto.setTaskId(task.getTaskId());
+            taskDto.setTaskName(task.getTaskName());
+            taskDto.setTaskContent(task.getTaskContent());
+            taskDto.setTaskEndDate(task.getTaskEndDate());
+            taskDto.setTaskCreationDate(task.getTaskCreationDate());
+            taskDto.setUserUUID(milestoneTask.getPk().getTask().getUser().getUserUUID());
+            taskDto.setProjectId(milestoneTask.getPk().getTask().getProject().getProjectId());
         }
         return taskDtos;
     }

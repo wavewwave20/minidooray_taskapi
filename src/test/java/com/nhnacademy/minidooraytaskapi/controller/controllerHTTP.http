@@ -1,0 +1,68 @@
+GET http://localhost:9091/api/task/users
+Content-Type: application/json
+
+###
+
+POST http://localhost:9091/api/task/users
+Content-Type: application/json
+
+{
+  "userUUID": "test-uuid",
+  "userId": "testId",
+  "userNickName": "testNickName",
+  "userEmail": "testEmail"
+}
+
+###
+
+DELETE http://localhost:9091/api/task/users/test-uuid
+
+###
+
+PUT http://localhost:9091/api/task/users/test-uuid
+Content-Type: application/json
+
+{
+  "userUUID": "test",
+  "userId": "update testId",
+  "userNickName": "update testNickName",
+  "userEmail": "update testEmail"
+}
+
+###
+
+GET http://localhost:9091/api/task/users/test-uuid
+
+###
+
+GET http://localhost:9091/api/task/projects/4
+
+###
+
+POST http://localhost:9091/api/task/projects
+Content-Type: application/json
+
+{
+  "projectName": "testProjectName",
+  "projectDescription": "testProjectDescription",
+  "projectStatus": "INACTIVE",
+  "userUUID": "test-uuid"
+}
+
+###
+
+PUT http://localhost:9091/api/task/projects/12
+Content-Type: application/json
+
+{
+  "projectName": "update testProjectName",
+  "projectDescription": "update testProjectDescription",
+  "projectStatus": "ACTIVE"
+}
+
+###
+
+DELETE http://localhost:9091/api/task/projects/12
+
+###
+

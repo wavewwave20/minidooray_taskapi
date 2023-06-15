@@ -32,7 +32,7 @@ public class TaskTagController {
 
     @GetMapping("/task-tag/list?tag={tagId}")
     public ResponseEntity<List<TaskDto>> getTasksByTag(@RequestParam Long tagId) {
-        List<TaskDto> taskDtos = taskTagService.getTasksByTag();
+        List<TaskDto> taskDtos = taskTagService.getTasksByTag(tagId);
         return ResponseEntity.ok(taskDtos);
     }
 

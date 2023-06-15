@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/task")
 public class ProjectController {
 
     private final ProjectService projectService;
@@ -17,28 +17,24 @@ public class ProjectController {
     }
 
 
-    @PostMapping("/project")
+    @PostMapping("/projects")
     public void createProject(@RequestBody ProjectCreateDto projectCreateDto) {
         projectService.projectCreate(projectCreateDto);
     }
 
-    @GetMapping("/project?project={projectId}")
-    public ResponseEntity<ProjectDto> getProjectById(@RequestParam Long projectId) {
+    @GetMapping("/projects/{projectId}")
+    public ResponseEntity<ProjectDto> getProjectById(@PathVariable Long projectId) {
         ProjectDto projectDto = projectService.getProjectById(projectId);
         return ResponseEntity.ok(projectDto);
     }
 
-    //update를 그냥 create으로 사용?
-    @PutMapping("/project?project={projectId}")
-    public void updateProjectById(@RequestParam Long projectId, @RequestBody ProjectDto projectDto) {
+    @PutMapping("/projects/{projectId}")
+    public void updateProjectById(@PathVariable Long projectId, @RequestBody ProjectDto projectDto) {
         projectService.updateProjectById(projectId, projectDto);
     }
 
-    @DeleteMapping("/project?project={projectId}")
-    public void deleteProjectById(@RequestParam Long projectId) {
+    @DeleteMapping("/projects/{projectId}")
+    public void deleteProjectById(@PathVariable Long projectId) {
         projectService.deleteProjectById(projectId);
     }
-
-
-
 }
