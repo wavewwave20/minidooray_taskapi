@@ -231,5 +231,59 @@ GET http://localhost:9091/api/task/tags/1/tasks
 DELETE http://localhost:9091/api/task/tasks/12/tags/1
 
 ###
+#private Long commentId;
+#private String commentContent;
+#private String commentCreationDate;
+#private String userUUID;
+#private Long taskId;
+#comment
+POST http://localhost:9091/api/task/comments
+Content-Type: application/json
 
+{
+  "commentContent": "testCommentContent",
+  "commentCreationDate": "2020-01-01T00:00:00",
+  "userUUID": "fc51ea9c-637a-4374-b007-df8592daeb5c",
+  "taskId": 12
+}
 
+###
+
+GET http://localhost:9091/api/task/comments/1
+
+###
+
+GET http://localhost:9091/api/task/comments/tasks/12
+
+###
+
+PUT http://localhost:9091/api/task/comments/1
+Content-Type: application/json
+
+{
+  "commentContent": "update testCommentContent",
+  "commentCreationDate": "2020-01-01T00:00:00",
+  "userUUID": "fc51ea9c-637a-4374-b007-df8592daeb5c",
+  "taskId": 12
+}
+
+###
+
+DELETE http://localhost:9091/api/task/comments/1
+
+###
+#UserTask
+
+POST http://localhost:9091/api/task/tasks/12/users/fc51ea9c-637a-4374-b007-df8592daeb5c
+
+###
+
+GET http://localhost:9091/api/task/users/fc51ea9c-637a-4374-b007-df8592daeb5c/tasks
+
+###
+
+GET http://localhost:9091/api/task/tasks/12/users
+
+###
+
+DELETE http://localhost:9091/api/task/tasks/12/users/fc51ea9c-637a-4374-b007-df8592daeb5c

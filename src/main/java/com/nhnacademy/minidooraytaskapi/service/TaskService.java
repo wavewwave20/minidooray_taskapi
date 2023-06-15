@@ -42,7 +42,7 @@ public class TaskService {
 
         Task savedTask = taskRepository.save(task);
 
-        userTaskService.createUserTask(taskCreateDto.getUserUUID(), savedTask.getTaskId());
+        userTaskService.createUserTask(savedTask.getTaskId(), taskCreateDto.getUserUUID());
     }
 
     @Transactional(readOnly = true)

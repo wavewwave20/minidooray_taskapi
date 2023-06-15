@@ -19,12 +19,11 @@ import java.util.List;
 public class UserTaskService {
     private final UserTaskRepository userTaskRepository;
     private final TaskRepository taskRepository;
-
     private final UserRepository userRepository;
 
 
     @Transactional
-    public void createUserTask(String userUUID, Long taskId) {
+    public void createUserTask(Long taskId, String userUUID) {
         UserTask userTask = new UserTask();
         UserTask.Pk pk = new UserTask.Pk();
 
@@ -37,10 +36,6 @@ public class UserTaskService {
         userTaskRepository.save(userTask);
     }
 
-    @Transactional
-    public void createUserTask(UserTaskCreateDto userTaskCreateDto) {
-        createUserTask(userTaskCreateDto.getUserUUID(), userTaskCreateDto.getTaskId());
-    }
 
     @Transactional
     public void deleteByTaskId(Long taskId) {
@@ -77,5 +72,15 @@ public class UserTaskService {
         }
         return userTaskCreateDtos;
 
+    }
+
+    @Transactional
+    public void deleteUserTask(Long taskId, String userUUID){
+        UserTask.Pk pk = new UserTask.Pk();
+        User userEntity = userRepository.findByUserUUID(userUUID);
+        Task taskEntity = taskRepository.findByTaskId(taskId);
+        pk.setTask(taskEntity);
+        pk.setUser(userEntity);
+        userTaskRepository.deleteById(pk);
     }
 }

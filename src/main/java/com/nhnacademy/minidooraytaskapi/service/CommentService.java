@@ -54,6 +54,8 @@ public class CommentService {
     public void updateCommentById(Long commentId, CommentDto commentDto) {
         Comment comment = commentRepository.findById(commentId).orElseThrow();
         comment.setCommentContent(commentDto.getCommentContent());
+        comment.setCommentCreationDate(commentDto.getCommentCreationDate());
+        comment.setUser(userRepository.findByUserUUID(commentDto.getUserUUID()));
         commentRepository.save(comment);
     }
 
