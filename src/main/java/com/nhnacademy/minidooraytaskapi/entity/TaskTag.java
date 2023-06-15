@@ -22,7 +22,7 @@ public class TaskTag {
     @EqualsAndHashCode
     @Getter
     @Setter
-    public class Pk implements Serializable {
+    public static class Pk implements Serializable {
         @JoinColumn(name="task_id")
         @ManyToOne
         private Task task;

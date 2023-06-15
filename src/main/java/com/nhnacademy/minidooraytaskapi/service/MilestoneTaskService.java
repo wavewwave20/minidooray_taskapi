@@ -68,6 +68,7 @@ public class MilestoneTaskService {
         }
     }
 
+    @Transactional(readOnly = true)
     public MilestoneTask toEntity(Long milestoneId, Long taskId) {
         MilestoneTask milestoneTask = new MilestoneTask();
         MilestoneTask.Pk pk = new MilestoneTask.Pk();

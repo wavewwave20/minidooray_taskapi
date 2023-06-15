@@ -129,4 +129,17 @@ public class TaskService {
         taskDto.setProjectId(task.getProject().getProjectId());
         return taskDto;
     }
+
+    @Transactional(readOnly = true)
+    public Task toEntity(TaskDto taskDto) {
+        Task task = new Task();
+        task.setTaskId(taskDto.getTaskId());
+        task.setTaskName(taskDto.getTaskName());
+        task.setTaskContent(taskDto.getTaskContent());
+        task.setTaskCreationDate(taskDto.getTaskCreationDate());
+        task.setTaskEndDate(taskDto.getTaskEndDate());
+        task.setUser(userRepository.findByUserUUID(taskDto.getUserUUID()));
+        task.setProject(projectRepository.findByProjectId(taskDto.getProjectId()));
+        return task;
+    }
 }
