@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface TagRepository extends JpaRepository<Tag, Long> {
     List<Tag> findTagsByProjectProjectId(Long projectId);
+
+    void deleteTagsByProjectProjectId(Long projectId);
 }

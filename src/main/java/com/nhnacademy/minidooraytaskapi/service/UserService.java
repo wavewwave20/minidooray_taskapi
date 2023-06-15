@@ -48,9 +48,20 @@ public class UserService {
         userRepository.deleteByUserUUID(uuid);
     }
 
-//    public void updateByUUId(String uuid, UserRegisterDto userRegisterDto) {
-//        userRepository.updateByUserUUID(uuid, userRegisterDto);
-//    }
+
+    @Transactional
+    public void updateByUUId(String uuid, UserRegisterDto userRegisterDto) {
+        UserGetDto userDto = getUserByUUId(uuid);
+        userDto.setUserNickName(userRegisterDto.getUserNickName());
+        userDto.setUserEmail(userRegisterDto.getUserEmail());
+
+        User user = new User();
+        user.setUserUUID(userDto.getUserUUID());
+        user.setUserId(userDto.getUserId());
+        user.setUserNickname(userDto.getUserNickName());
+        user.setUserEmail(userDto.getUserEmail());
+        userRepository.save(user);
+    }
 
     @Transactional(readOnly = true)
     public UserGetDto getUserByUUId(String uuid) {
@@ -80,6 +91,16 @@ public class UserService {
             userGetDtoList.add(toUserGetDto(user));
         }
         return userGetDtoList;
+    }
+
+    @Transactional(readOnly = true)
+    public UserGetDto toDto(User user) {
+        UserGetDto userGetDto = new UserGetDto();
+        userGetDto.setUserUUID(user.getUserUUID());
+        userGetDto.setUserId(user.getUserId());
+        userGetDto.setUserNickName(user.getUserNickname());
+        userGetDto.setUserEmail(user.getUserEmail());
+        return userGetDto;
     }
 
 }

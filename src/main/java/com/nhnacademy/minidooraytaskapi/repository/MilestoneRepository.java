@@ -10,4 +10,6 @@ public interface MilestoneRepository extends JpaRepository<Milestone, Long> {
     Milestone findByMilestoneId(Long milestoneId);
 
     List<Milestone> findMilestonesByProjectProjectId(Long projectId);
+
+    void deleteMilestonesByProjectProjectId(Long projectId);
 }

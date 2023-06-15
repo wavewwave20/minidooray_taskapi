@@ -2,8 +2,6 @@ package com.nhnacademy.minidooraytaskapi.controller;
 
 import com.nhnacademy.minidooraytaskapi.dto.TagCreateDto;
 import com.nhnacademy.minidooraytaskapi.dto.TagDto;
-import com.nhnacademy.minidooraytaskapi.dto.UserGetDto;
-import com.nhnacademy.minidooraytaskapi.entity.Tag;
 import com.nhnacademy.minidooraytaskapi.service.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

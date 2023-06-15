@@ -36,7 +36,7 @@ public class ProjectController {
 
     @DeleteMapping("/project?project={projectId}")
     public void deleteProjectById(@RequestParam Long projectId) {
-        //projectService.deleteProjectById(projectId);
+        projectService.deleteProjectById(projectId);
     }
 
 

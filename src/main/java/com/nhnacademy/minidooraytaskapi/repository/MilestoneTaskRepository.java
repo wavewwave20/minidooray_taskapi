@@ -9,4 +9,6 @@ public interface MilestoneTaskRepository extends JpaRepository<MilestoneTask, Mi
     List<MilestoneTask> findMilestoneTasksByPkMilestoneMilestoneId(Long milestoneId);
 
     List<MilestoneTask> findMilestoneTasksByPkTaskTaskId(Long taskId);
+
+    void deleteMilestoneTasksByPkTaskTaskId(Long taskId);
 }

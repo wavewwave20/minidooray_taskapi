@@ -68,6 +68,11 @@ public class MilestoneTaskService {
         }
     }
 
+    @Transactional
+    public void deleteByTaskId(Long taskId) {
+        milestoneTaskRepository.deleteMilestoneTasksByPkTaskTaskId(taskId);
+    }
+
     @Transactional(readOnly = true)
     public MilestoneTask toEntity(Long milestoneId, Long taskId) {
         MilestoneTask milestoneTask = new MilestoneTask();

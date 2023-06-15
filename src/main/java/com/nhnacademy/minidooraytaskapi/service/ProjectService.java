@@ -16,9 +16,21 @@ public class ProjectService {
 
     private final UserRepository userRepository;
 
-    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository) {
+    private final TaskService taskService;
+
+    private final TagService tagService;
+
+    private final MilestoneService milestoneService;
+
+    private final ProjectUserService projectUserService;
+
+    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository, TaskService taskService, TagService tagService, MilestoneService milestoneService, ProjectUserService projectUserService) {
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
+        this.taskService = taskService;
+        this.tagService = tagService;
+        this.milestoneService = milestoneService;
+        this.projectUserService = projectUserService;
     }
 
     @Transactional
@@ -67,5 +79,16 @@ public class ProjectService {
         }
     }
 
+    @Transactional
+    public void deleteProjectById(Long projectId) {
+        Optional<Project> project = projectRepository.findById(projectId);
 
+        if (project.isPresent()) {
+            taskService.deleteTaskByProjectId(projectId);
+            tagService.deleteTagByProjectId(projectId);
+            milestoneService.deleteMilestoneByProjectId(projectId);
+            projectUserService.deleteProjectByProjectId(projectId);
+            projectRepository.deleteById(projectId);
+        }
+    }
 }

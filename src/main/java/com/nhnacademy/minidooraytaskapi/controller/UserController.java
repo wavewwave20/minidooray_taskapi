@@ -4,10 +4,12 @@ import com.nhnacademy.minidooraytaskapi.dto.UserGetDto;
 import com.nhnacademy.minidooraytaskapi.dto.UserRegisterDto;
 import com.nhnacademy.minidooraytaskapi.entity.User;
 import com.nhnacademy.minidooraytaskapi.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/api")
@@ -19,12 +21,17 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/user/list")
+    public ResponseEntity<List<UserGetDto>> getAllUsers() {
+        List<UserGetDto> userGetDtoList = userService.getAllUser();
+        return ResponseEntity.ok(userGetDtoList);
+    }
+
 
     @GetMapping("/user?user={userUUID}")
     public UserGetDto getUserByUUId(@RequestParam String userUUID) {
         return userService.getUserByUUId(userUUID);
     }
-
 
     @PostMapping("/user")
     public User create(@RequestBody UserRegisterDto userRegisterDto) {
@@ -36,9 +43,9 @@ public class UserController {
         userService.deleteByUUId(userUUID);
     }
 
-//    @PutMapping("/api/users/{id}")
-//    public void updateByUUId(@PathVariable String UUID, @RequestBody UserRegisterDto userRegisterDto) {
-//        userService.updateByUUId(UUID, userRegisterDto);
-//    }
+    @PutMapping("/api/users/{id}")
+    public void updateByUUId(@PathVariable String userUUID, @RequestBody UserRegisterDto userRegisterDto) {
+        userService.updateByUUId(userUUID, userRegisterDto);
+    }
 
 }

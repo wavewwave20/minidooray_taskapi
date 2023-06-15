@@ -87,4 +87,9 @@ public class ProjectUserService {
         userProjectRepository.deleteUserProjectByPkProjectProjectIdAndPkUserUserUUID(projectId, userUUID);
     }
 
+    @Transactional
+    public void deleteProjectByProjectId(Long projectId) {
+        userProjectRepository.deleteUserProjectsByPkProjectProjectId(projectId);
+    }
+
 }

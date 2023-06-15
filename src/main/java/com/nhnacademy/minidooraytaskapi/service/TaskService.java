@@ -28,7 +28,9 @@ public class TaskService {
 
     private final CommentService commentService;
 
-    //private final TaskTagService taskTagService;
+    private final TaskTagService taskTagService;
+
+    private final MilestoneTaskService milestoneTaskService;
 
 
     @Transactional
@@ -99,16 +101,23 @@ public class TaskService {
     public void deleteTaskById(Long taskId) {
         Optional<Task> taskOptional = taskRepository.findById(taskId);
         if (taskOptional.isPresent()) {
-            Task task = taskOptional.get();
             commentService.deleteCommentByTaskId(taskId);
             userTaskService.deleteByTaskId(taskId);
-            //테스크테그 삭제
-            //TaskTagService.deleteByTaskId(taskId);
-            //마일스톤테스크 삭제
-            //테스크삭제
+            taskTagService.deleteTaskTagByTaskId(taskId);
+            milestoneTaskService.deleteByTaskId(taskId);
+            taskRepository.deleteById(taskId);
         }
     }
 
+    @Transactional
+    public void deleteTaskByProjectId(Long projectId) {
+        List<Task> tasks = taskRepository.findTasksByProjectProjectId(projectId);
+        for (Task task : tasks) {
+            deleteTaskById(task.getTaskId());
+        }
+    }
+
+    @Transactional(readOnly = true)
     public List<TaskDto> taskListToDtoList(List<Task> tasks) {
         List<TaskDto> taskDtos = new ArrayList<>();
 
@@ -118,6 +127,7 @@ public class TaskService {
         return taskDtos;
     }
 
+    @Transactional(readOnly = true)
     public TaskDto toDto(Task task) {
         TaskDto taskDto = new TaskDto();
         taskDto.setTaskId(task.getTaskId());

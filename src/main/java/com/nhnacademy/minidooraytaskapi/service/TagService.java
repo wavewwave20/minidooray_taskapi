@@ -49,7 +49,6 @@ public class TagService {
         return tagDtoList;
     }
 
-
     @Transactional
     public void createTag(TagCreateDto tagDto) {
         tagRepository.save(toEntity(tagDto));
@@ -68,8 +67,7 @@ public class TagService {
         tagRepository.deleteById(tagId);
     }
 
-
-
+    @Transactional(readOnly = true)
     public Tag toEntity(TagCreateDto tagDto) {
         Tag tag = new Tag();
         tag.setTagName(tagDto.getTagName());
@@ -77,6 +75,7 @@ public class TagService {
         return tag;
     }
 
+    @Transactional(readOnly = true)
     public TagDto toDto(Tag tag) {
         TagDto tagDto = new TagDto();
         tagDto.setTagId(tag.getTagId());
@@ -85,6 +84,7 @@ public class TagService {
         return tagDto;
     }
 
+    @Transactional(readOnly = true)
     public UserGetDto toUserDto(User user) {
         UserGetDto userDto = new UserGetDto();
         userDto.setUserUUID(user.getUserUUID());
@@ -98,6 +98,11 @@ public class TagService {
     public UserGetDto getUserByTagId(Long tagId) {
         User user = tagRepository.findById(tagId).orElseThrow().getProject().getUser();
         return toUserDto(user);
+    }
+
+    @Transactional
+    public void deleteTagByProjectId(Long projectId) {
+        tagRepository.deleteTagsByProjectProjectId(projectId);
     }
 
 

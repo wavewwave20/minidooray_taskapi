@@ -75,5 +75,10 @@ public class MilestoneService {
         return milestone;
     }
 
+    @Transactional
+    void deleteMilestoneByProjectId(Long projectId) {
+        milestoneRepository.deleteMilestonesByProjectProjectId(projectId);
+    }
+
 
 }
