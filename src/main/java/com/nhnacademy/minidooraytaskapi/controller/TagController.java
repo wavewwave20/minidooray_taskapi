@@ -3,8 +3,10 @@ package com.nhnacademy.minidooraytaskapi.controller;
 import com.nhnacademy.minidooraytaskapi.dto.TagCreateDto;
 import com.nhnacademy.minidooraytaskapi.dto.TagDto;
 import com.nhnacademy.minidooraytaskapi.dto.UserGetDto;
+import com.nhnacademy.minidooraytaskapi.entity.Tag;
 import com.nhnacademy.minidooraytaskapi.service.TagService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,15 +18,15 @@ public class TagController {
 
     private final TagService tagService;
 
-    //TODO: projectid로 tag 가져오기, taskid로 tag 가져오기
-//    @GetMapping("/tag")
-//    public List<TagDto> getAllTag() {
-//        return tagService.getAllTag();
-//    }
-
     @GetMapping("/tag?tag={tagId}")
     public TagDto getTagById(@RequestParam Long tagId) {
         return tagService.getTagById(tagId);
+    }
+
+    @GetMapping("/tag/list?project={projectId}")
+    public ResponseEntity<List<TagDto>> getTagsByProjectId(@RequestParam Long projectId) {
+        List<TagDto> tagDtos = tagService.getTagsByProjectId(projectId);
+        return ResponseEntity.ok(tagDtos);
     }
 
     @PostMapping("/tag")
@@ -41,10 +43,5 @@ public class TagController {
     public void deleteTagById(@PathVariable Long tagId) {
         tagService.deleteTagById(tagId);
     }
-
-//    @GetMapping("/tag/search/{tagId}")
-//    public UserGetDto getUserByTagId(@PathVariable Long tagId) {
-//        return tagService.getUserByTagId(tagId);
-//    }
 
 }

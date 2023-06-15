@@ -11,12 +11,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class TagService {
     private final TagRepository tagRepository;
+
+    private final TaskTagService taskTagService;
 
     private final ProjectRepository projectRepository;
 
@@ -36,6 +39,17 @@ public class TagService {
         return toDto(tag);
     }
 
+    @Transactional(readOnly = true)
+    public List<TagDto> getTagsByProjectId(Long projectId) {
+        List<Tag> tagList = tagRepository.findTagsByProjectProjectId(projectId);
+        List<TagDto> tagDtoList = new ArrayList<>();
+        for (Tag tag : tagList) {
+            tagDtoList.add(toDto(tag));
+        }
+        return tagDtoList;
+    }
+
+
     @Transactional
     public void createTag(TagCreateDto tagDto) {
         tagRepository.save(toEntity(tagDto));
@@ -50,6 +64,7 @@ public class TagService {
 
     @Transactional
     public void deleteTagById(Long tagId) {
+        taskTagService.deleteTaskTagByTagId(tagId);
         tagRepository.deleteById(tagId);
     }
 

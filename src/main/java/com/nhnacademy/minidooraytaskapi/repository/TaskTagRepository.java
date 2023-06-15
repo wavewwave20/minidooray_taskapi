@@ -10,4 +10,8 @@ public interface TaskTagRepository extends JpaRepository<TaskTag, TaskTag.Pk> {
     List<TaskTag> findTaskTagsByPkTaskTaskId(Long taskId);
 
     List<TaskTag> findTaskTagsByPkTagTagId(Long tagId);
+
+    void deleteTaskTagsByPkTaskTaskId(Long taskId);
+
+    void deleteTaskTagsByPkTagTagId(Long tagId);
 }

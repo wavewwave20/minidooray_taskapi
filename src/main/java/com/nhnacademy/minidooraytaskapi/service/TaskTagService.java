@@ -78,4 +78,14 @@ public class TaskTagService {
         taskTagRepository.delete(taskTag);
 
     }
+
+    @Transactional
+    public void deleteTaskTagByTagId(Long tagId) {
+        taskTagRepository.deleteTaskTagsByPkTagTagId(tagId);
+    }
+
+    @Transactional
+    public void deleteTaskTagByTaskId(Long taskId) {
+        taskTagRepository.deleteTaskTagsByPkTaskTaskId(taskId);
+    }
 }
