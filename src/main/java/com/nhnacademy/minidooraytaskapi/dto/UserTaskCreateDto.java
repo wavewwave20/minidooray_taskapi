@@ -8,5 +8,5 @@ import lombok.Setter;
 public class UserTaskCreateDto {
     private String userUUID;
 
-    private Long TaskId;
+    private Long taskId;
 }

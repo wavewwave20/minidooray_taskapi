@@ -41,7 +41,7 @@ public class ProjectUserController {
         projectUserService.deleteProjectUser(projectId, userUUID);
     }
 
-    @DeleteMapping("/users/projects/{projectId}")
+    @DeleteMapping("/projects/{projectId}/users")
     public void deleteProjectByProjectId(@PathVariable Long projectId) {
         projectUserService.deleteProjectByProjectId(projectId);
     }
