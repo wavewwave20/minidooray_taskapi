@@ -1,5 +1,10 @@
 # minidooray_taskapi
 
+TODO: 요청한 데이터에 대해 validation 추가   
+TODO: POST 요청에 대해 201 Created 응답과 생성된 id로 응답 추가   
+TODO: DELETE 요청에 대해 204 No Content 응답 추가   
+TODO: unit test code 작성   
+
 
 ## user
 
