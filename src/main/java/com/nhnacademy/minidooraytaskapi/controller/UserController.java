@@ -2,7 +2,6 @@ package com.nhnacademy.minidooraytaskapi.controller;
 
 import com.nhnacademy.minidooraytaskapi.dto.UserGetDto;
 import com.nhnacademy.minidooraytaskapi.dto.UserRegisterDto;
-import com.nhnacademy.minidooraytaskapi.entity.User;
 import com.nhnacademy.minidooraytaskapi.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,14 +25,13 @@ public class UserController {
         return ResponseEntity.ok(userGetDtoList);
     }
 
-
     @GetMapping("/users/{userUUID}")
     public UserGetDto getUserByUUId(@PathVariable String userUUID) {
         return userService.getUserByUUId(userUUID);
     }
 
     @PostMapping("/users")
-    public User create(@RequestBody UserRegisterDto userRegisterDto) {
+    public UserGetDto create(@RequestBody UserRegisterDto userRegisterDto) {
         return userService.registerUser(userRegisterDto);
     }
 

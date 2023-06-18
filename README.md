@@ -249,7 +249,7 @@ TODO: unit test code 작성
     |projectId|long|Y||
 </br>
 
-### GET /tasks/projects/{projectId}
+### GET /api/task/tasks/projects/{projectId}
 - Description: 프로젝트 ID로 조회한 태스크 정보 리스트를 반환합니다.
 - Path Variables: 
     - projectId: 프로젝트 ID
@@ -266,7 +266,7 @@ TODO: unit test code 작성
     |userUUID|string|Y||
     |projectId|long|Y||
 
-### GET /tasks/users/{userUUID}/admin
+### GET /api/task/tasks/users/{userUUID}/admin
 - Description: 사용자 UUID로 조회하여 관리자로 있는 태스크 리스트를 반환합니다.
 - Path Variables: 
     - userUUID: 사용자 UUID
@@ -284,7 +284,7 @@ TODO: unit test code 작성
     |projectId|long|Y||
 </br>
 
-### PUT /tasks/{taskId}
+### PUT /api/task/tasks/{taskId}
 - Description: 태스크 ID로 조회하여 태스크 정보를 수정합니다.
 - Path Variables: 
     - taskId: 태스크 ID
@@ -298,7 +298,7 @@ TODO: unit test code 작성
     |taskEndDate|datetime|Y||
 </br>
 
-### DELETE /tasks/{taskId}
+### DELETE /api/task/tasks/{taskId}
 - Description: 태스크 ID로 대상 태스크 정보를 삭제합니다.
 - Path Variables: 
     - taskId: 태스크 ID

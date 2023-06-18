@@ -38,7 +38,6 @@ GET http://localhost:9091/api/task/users/test-uuid
 GET http://localhost:9091/api/task/projects/4
 
 ###
-
 POST http://localhost:9091/api/task/projects
 Content-Type: application/json
 
@@ -46,7 +45,7 @@ Content-Type: application/json
   "projectName": "testProjectName",
   "projectDescription": "testProjectDescription",
   "projectStatus": "INACTIVE",
-  "userUUID": "test-uuid"
+  "userUUID": "fc51ea9c-637a-4374-b007-df8592daeb5c"
 }
 
 ###
@@ -287,3 +286,8 @@ GET http://localhost:9091/api/task/tasks/12/users
 ###
 
 DELETE http://localhost:9091/api/task/tasks/12/users/fc51ea9c-637a-4374-b007-df8592daeb5c
+
+
+###
+
+DELETE http://localhost:9091/api/task/projects/5

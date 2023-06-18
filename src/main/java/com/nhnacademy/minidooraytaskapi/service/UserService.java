@@ -34,13 +34,20 @@ public class UserService {
     }
 
     @Transactional
-    public User registerUser(UserRegisterDto userRegisterDto) {
+    public UserGetDto registerUser(UserRegisterDto userRegisterDto) {
         User user = new User();
         user.setUserUUID(userRegisterDto.getUserUUID());
         user.setUserId(userRegisterDto.getUserId());
         user.setUserNickname(userRegisterDto.getUserNickName());
         user.setUserEmail(userRegisterDto.getUserEmail());
-        return userRepository.save(user);
+        userRepository.save(user);
+
+        UserGetDto userGetDto = new UserGetDto();
+        userGetDto.setUserUUID(user.getUserUUID());
+        userGetDto.setUserId(user.getUserId());
+        userGetDto.setUserNickName(user.getUserNickname());
+        userGetDto.setUserEmail(user.getUserEmail());
+        return userGetDto;
     }
 
     @Transactional
